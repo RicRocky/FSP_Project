@@ -16,8 +16,8 @@
         <p>
             <label for="role">Pilih Peran:</label>
             <select name="role" id="role">
-                <option value="dosen">Dosen</option>
-                <option value="mahasiswa">Mahasiswa</option>
+                <option value="">Dosen</option>
+                <option value="">Mahasiswa</option>
             </select>
         </p>
         <p>
@@ -71,20 +71,10 @@
             </p>
         </div>
         <p>
-            <input type="submit" name="submit" value="Add Account" />
+            <input type="submit" name="submit" value="Save" />
         </p>
     </form>
     <script>
-        $('body').on('change', '#role', function () {
-            var selected = $(this).val();
-            if (selected == 'dosen') {
-                $("#mahasiswa").hide();
-                $("#dosen").show();
-            } else if (selected == 'mahasiswa') {
-                $("#mahasiswa").show();
-                $("#dosen").hide();
-            }
-        })
     </script>
 </body>
 

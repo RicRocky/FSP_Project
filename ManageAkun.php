@@ -30,7 +30,7 @@
                 <td>3</td>
                 <td>4</td>
                 <td><a href="#" class="space">Edit</a><a href="#" class="space">Delete</a> </td>
-            </tr>
+            </tr>   
         </tbody>
         <script>
             $('body').on('change', '#role', function () {
