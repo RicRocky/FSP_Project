@@ -5,5 +5,9 @@ class Connection
 {
     protected $mysqli;
     public function __construct() { $this->mysqli = new mysqli(SERVER_NAME, USER_NAME, PASSWORD, DB_NAME);}
+    
+    public function getConnection(){
+        return $this->mysqli;
+    }
 }
 ?>

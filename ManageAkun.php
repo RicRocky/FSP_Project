@@ -1,18 +1,48 @@
+<?php
+require_once "backend/db/Connection.php";
+
+$con = new Connection();
+$stmt = $con->getConnection()->query("SELECT * FROM akun");
+
+$hasil;
+while ($row = $stmt->fetch_assoc()) {
+    $mahasiswaOrDosen = false;
+    $nrpOrNpk;
+    if (isset($row["nrp_mahasiswa"])) {
+        $nrpOrNpk = $row["nrp_mahasiswa"];
+
+        $stmtNrpOrNpk = $con->getConnection()->query("SELECT * FROM mahasiswa WHERE nrp = '" . $nrpOrNpk . "'");
+
+    } else {
+        $mahasiswaOrDosen = true;
+        $nrpOrNpk = $row["npk_dosen"];
+
+        $stmtNrpOrNpk = $con->getConnection()->query("SELECT * FROM dosen WHERE npk = '" . $nrpOrNpk . "'");
+
+    }
+
+    $hasil .= "<tr>";
+    $hasil .= "     <td>" . $nrpOrNpk . "</td>";
+    $hasil .= "     <td>" . $row["username"] . "</td>";
+    $hasil .= "</tr>";
+}
+?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Account</title>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <style>
-        .space{
+        .space {
             margin: 10px;
         }
     </style>
 </head>
-<h1>List Of Accounts</h1>
 
 <body>
+    <h1>List Of Accounts</h1>
     <table border="1" cellspacing="0" cellpadding="5">
         <thead>
             <tr>
@@ -30,20 +60,22 @@
                 <td>3</td>
                 <td>4</td>
                 <td><a href="#" class="space">Edit</a><a href="#" class="space">Delete</a> </td>
-            </tr>   
+            </tr>
         </tbody>
-        <script>
-            $('body').on('change', '#role', function () {
-                var selected = $(this).val();
-                if (selected == 'dosen') {
-                    $("#mahasiswa").hide();
-                    $("#dosen").show();
-                } else if (selected == 'mahasiswa') {
-                    $("#mahasiswa").show();
-                    $("#dosen").hide();
-                }
-            })
-        </script>
+    </table>
 </body>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script>
+    $('body').on('change', '#role', function () {
+        var selected = $(this).val();
+        if (selected == 'dosen') {
+            $("#mahasiswa").hide();
+            $("#dosen").show();
+        } else if (selected == 'mahasiswa') {
+            $("#mahasiswa").show();
+            $("#dosen").hide();
+        }
+    })
+</script>
 
 </html>
