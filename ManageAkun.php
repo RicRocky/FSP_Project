@@ -4,26 +4,38 @@ require_once "backend/db/Connection.php";
 $con = new Connection();
 $stmt = $con->getConnection()->query("SELECT * FROM akun");
 
-$hasil;
+$hasil = "";
 while ($row = $stmt->fetch_assoc()) {
-    $mahasiswaOrDosen = false;
-    $nrpOrNpk;
+    $isLecturer = "-";
+    $isAdmin = "-";
+    $nrpOrNpk = "-";
+    $foto = "-";
     if (isset($row["nrp_mahasiswa"])) {
         $nrpOrNpk = $row["nrp_mahasiswa"];
 
-        $stmtNrpOrNpk = $con->getConnection()->query("SELECT * FROM mahasiswa WHERE nrp = '" . $nrpOrNpk . "'");
-
-    } else {
-        $mahasiswaOrDosen = true;
+        $stmtNrpOrNpk = $con->getConnection()->query("SELECT foto_extention FROM mahasiswa WHERE nrp = '" . $nrpOrNpk . "'");
+        $foto = $stmtNrpOrNpk->fetch_assoc()["foto_extention"];
+        
+    } else if (isset($row["npk_dosen"])) {
+        $isLecturer = "Iya";
         $nrpOrNpk = $row["npk_dosen"];
-
-        $stmtNrpOrNpk = $con->getConnection()->query("SELECT * FROM dosen WHERE npk = '" . $nrpOrNpk . "'");
-
+        
+        $stmtNrpOrNpk = $con->getConnection()->query("SELECT foto_extension FROM dosen WHERE npk = '" . $nrpOrNpk . "'");
+        $foto = $stmtNrpOrNpk->fetch_assoc()["foto_extension"];
+        
+    }else{
+        $isAdmin = "Iya";
+        $nrpOrNpk = "-";
+        $foto = "-";
     }
 
     $hasil .= "<tr>";
     $hasil .= "     <td>" . $nrpOrNpk . "</td>";
     $hasil .= "     <td>" . $row["username"] . "</td>";
+    $hasil .= "     <td>" . $foto . "</td>";
+    $hasil .= "     <td>" . $isLecturer . "</td>";
+    $hasil .= "     <td>" . $isAdmin . "</td>";
+    $hasil .= '     <td><a href="#" class="space">Edit</a><a href="#" class="space">Delete</a> </td>';
     $hasil .= "</tr>";
 }
 ?>
@@ -50,17 +62,12 @@ while ($row = $stmt->fetch_assoc()) {
                 <th>Name</th>
                 <th>Photo</th>
                 <th>Is Lecturer?</th>
+                <th>Is Admin?</th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td>4</td>
-                <td><a href="#" class="space">Edit</a><a href="#" class="space">Delete</a> </td>
-            </tr>
+            <?php echo $hasil; ?>
         </tbody>
     </table>
 </body>
