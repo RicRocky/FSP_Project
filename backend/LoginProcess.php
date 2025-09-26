@@ -35,11 +35,11 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
         $stmt->close();
         $conn->close();
         // Login gagal
-        header("Location: login.php?error=Username atau password salah"));
+        header("Location: login.php?error=Username atau password salah");
     }
     
 } else {
     $conn->close();
-    header("Location: login.php?error=Form tidak lengkap"));
+    header("Location: login.php?error=Form tidak lengkap");
 }
 ?>

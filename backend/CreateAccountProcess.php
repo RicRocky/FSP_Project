@@ -60,6 +60,6 @@ if (isset($_POST['submit'])) {
 
     $stmt->close();
     $mysqli->close();
-    header("Location: index.php");
+    header("Location: login.php");
 }
 ?>

@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    <form action="CreateAkunProses.php" method="post" enctype="multipart/form-data">
+    <form action="CreateAccountProcess .php" method="post" enctype="multipart/form-data">
         <p>
             <label for="role">Pilih Peran:</label>
             <select name="role" id="role">

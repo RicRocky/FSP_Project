@@ -1,4 +1,5 @@
 <?php
+header("Location: ManageAccount.php");
 session_start();
 if (isset($_SESSION['user'])) {
     header("Location: Home.php");
@@ -14,7 +15,7 @@ if (isset($_SESSION['user'])) {
 <body>
     <h2>Form Login</h2>
     
-    <form method="post" action="LoginProses.php">
+    <form method="post" action="LoginProcess.php">
       <label>Username:</label>
         <input type="text" name="username" required><br>
       <label>Password:</label>
