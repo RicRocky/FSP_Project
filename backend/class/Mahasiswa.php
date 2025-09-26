@@ -8,12 +8,30 @@ class Mahasiswa extends Connection
         parent::__construct();
     }
 
-    public function GetMahasiswa($nrp = "")
+    public function GetMahasiswa($limit = 10, $offset = null, $nrp = "")
     {
-        $stmt = $this->mysqli->prepare("SELECT * FROM mahasiswa WHERE nrp LIKE ?");
+        $sql = "SELECT * FROM akun a INNER JOIN mahasiswa m ON a.nrp_mahasiswa = m.nrp";
+        if ($nrp != "") {
+            $sql .= " WHERE m.nrp LIKE ? OR a.username LIKE ? ";
+        }
 
-        $nrp = "%" . $nrp . "%";
-        $stmt->bind_param("s", $nrp);
+        if (!is_null($offset)) {
+            $sql .= " LIMIT ?, ?";
+        }
+
+        $stmt = $this->mysqli->prepare($sql);
+
+        if (!is_null($offset) && $nrp != "") {
+            $nrp = "%" . $nrp . "%";
+            $stmt->bind_param("ssii", $nrp, $nrp, $offset, $limit);
+
+        } else if (is_null($offset) && $nrp != "") {
+            $nrp = "%" . $nrp . "%";
+            $stmt->bind_param("ss", $nrp, $nrp);
+
+        } else if (!is_null($offset) && $nrp == "") {
+            $stmt->bind_param("ii", $offset, $limit);
+        }
 
         $stmt->execute();
         $res = $stmt->get_result();
@@ -21,5 +39,11 @@ class Mahasiswa extends Connection
         $stmt->close();
 
         return $res;
+    }
+
+    public function getTotalData($limit, $offset, $keyword_search)
+    {
+        $res = $this->GetMahasiswa($limit, $offset, $keyword_search);
+        return $res->num_rows;
     }
 }
