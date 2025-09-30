@@ -4,55 +4,44 @@ require_once "backend/class/Mahasiswa.php";
 require_once "backend/class/Dosen.php";
 require_once "backend/helper/Pagination.php";
 
-$DATA_PER_PAGE = 5;
+$DATA_PER_PAGE = 7; // Jumlah data
 
-$hal_ke_mahasiswa = isset($_GET['pageMahasiswa']) ? $_GET['pageMahasiswa'] : 1;
-$hal_ke_dosen = isset($_GET['pageDosen']) ? $_GET['pageDosen'] : 1;
-if ($hal_ke_dosen <= 0) {
-    $hal_ke_dosen = 1;
-}
 
-$offset_mahasiswa = $DATA_PER_PAGE * ($hal_ke_mahasiswa - 1);
-$offset_dosen = $DATA_PER_PAGE * ($hal_ke_dosen - 1);
+// Pagination mahasiswa
+$hal_ke_mahasiswa = isset($_GET['pageMahasiswa']) ? $_GET['pageMahasiswa'] : 1;     // Halaman mahasiswa saat ini
+$offset_mahasiswa = $DATA_PER_PAGE * ($hal_ke_mahasiswa - 1);       // Start Data Mahasiswa
 
 $mahasiswas = new Mahasiswa();
-$dosens = new Dosen();
-
-if (isset($_GET['cariMahasiswa'])) {
-    $resMahasiswas = $mahasiswas->GetMahasiswa($DATA_PER_PAGE, $offset_mahasiswa, $_GET["cariMahasiswa"]);
-} else {
-    $resMahasiswas = $mahasiswas->GetMahasiswa($DATA_PER_PAGE, $offset_mahasiswa);
-}
-
-if (isset($_GET['cariDosen'])) {
-    $resDosens = $dosens->GetDosen($DATA_PER_PAGE, $offset_dosen, isset($_GET["cariDosen"]) ? $_GET["cariDosen"] : "");
-} else {
-    $resDosens = $dosens->GetDosen($DATA_PER_PAGE, $offset_dosen);
-}
-
+$resMahasiswas = $mahasiswas->GetMahasiswa($DATA_PER_PAGE, $offset_mahasiswa, isset($_GET['cariMahasiswa'])? $_GET["cariMahasiswa"]: "");
 $jumMahasiswas = $mahasiswas->getTotalData($DATA_PER_PAGE, null, isset($_GET['cariMahasiswa']) ? $_GET['cariMahasiswa'] : "");
-$jumDosens = $dosens->getTotalData($DATA_PER_PAGE, null, isset($_GET['cariDosen']) ? $_GET['cariDosen'] : "");
 
 $hasilMahasiswa = "";
-while ($row = $resMahasiswas->fetch_assoc()) {
+while ($resMahasiswa = $resMahasiswas->fetch_assoc()) {
     $isLecturer = "-";
     $isAdmin = "-";
-    $nrpOrNpk = $row["nrp"];
-    $username = $row["username"];
-    $foto = $row["foto_extention"];
+    $nrpOrNpk = $resMahasiswa["nrp"];
+    $username = $resMahasiswa["username"];
+    $foto = $resMahasiswa["foto_extention"];
 
     $hasilMahasiswa .= "<tr>";
     $hasilMahasiswa .= "     <td>" . $nrpOrNpk . "</td>";
-    $hasilMahasiswa .= "     <td>" . $row["username"] . "</td>";
+    $hasilMahasiswa .= "     <td>" . $resMahasiswa["username"] . "</td>";
     $hasilMahasiswa .= "     <td>" . $foto . "</td>";
     $hasilMahasiswa .= "     <td>" . $isLecturer . "</td>";
     $hasilMahasiswa .= "     <td>" . $isAdmin . "</td>";
-    $hasilMahasiswa .= '     <td><a href="EditAccount.php?id=' . $nrpOrNpk . '&role=' . $isLecturer . '" class="space">Edit</a>
-    <a href="backend/DeleteAccountProcess.php?id=' . $nrpOrNpk . '&role=' . $isLecturer . '&username=' . $username . '&ext=' . $foto . '" class="space" 
-    onclick="return confirm(\'Are you sure you want to delete this account?\')">Delete</a>
-    </td>';
+    $hasilMahasiswa .= '     <td><a href="EditAccount.php?id=' . $nrpOrNpk . '&role=' . $isLecturer . '" class="space">Edit</a>';
+    $hasilMahasiswa .= '         <a href="backend/DeleteAccountProcess.php?id=' . $nrpOrNpk . '&role=' . $isLecturer . '&username=' . $username . '&ext=' . $foto . '" class="space" onclick="return confirm(\'Are you sure you want to delete this account?\')">Delete</a></td>';
     $hasilMahasiswa .= "</tr>";
 }
+
+
+// Pagination Dosen
+$hal_ke_dosen = isset($_GET['pageDosen']) ? $_GET['pageDosen'] : 1;     // Halaman dosen saat ini
+$offset_dosen = $DATA_PER_PAGE * ($hal_ke_dosen - 1);   // Start Data Mahasiswa
+
+$dosens = new Dosen();
+$resDosens = $dosens->GetDosen($DATA_PER_PAGE, $offset_dosen, isset($_GET["cariDosen"]) ? $_GET["cariDosen"] : "");
+$jumDosens = $dosens->getTotalData($DATA_PER_PAGE, null, isset($_GET['cariDosen']) ? $_GET['cariDosen'] : "");
 
 $hasilDosen = "";
 while ($row = $resDosens->fetch_assoc()) {
@@ -122,7 +111,13 @@ while ($row = $resDosens->fetch_assoc()) {
             </tbody>
         </table>
         <div class="c-mt-1">
-            <?php echo GeneratePageNumber($DATA_PER_PAGE, $jumMahasiswas, $jumDosens, isset($_GET["cariMahasiswa"]) ? $_GET["cariMahasiswa"] : "", $hal_ke_mahasiswa, isset($_GET["cariDosen"]) ? $_GET["cariDosen"] : "", $hal_ke_dosen) ?>
+            <?php echo GeneratePageNumberMahasiswa($DATA_PER_PAGE, 
+                                                $jumMahasiswas, 
+                                                $jumDosens, 
+                                                isset($_GET["cariMahasiswa"]) ? $_GET["cariMahasiswa"] : "", 
+                                                $hal_ke_mahasiswa, 
+                                                isset($_GET["cariDosen"]) ? $_GET["cariDosen"] : "", 
+                                                $hal_ke_dosen) ?>
         </div>
     </div>
 
@@ -148,7 +143,13 @@ while ($row = $resDosens->fetch_assoc()) {
             </tbody>
         </table>
         <div class="c-mt-1">
-            <?php echo GeneratePageNumber($DATA_PER_PAGE, $jumMahasiswas, $jumDosens, isset($_GET["cariMahasiswa"]) ? $_GET["cariMahasiswa"] : "", $hal_ke_mahasiswa, isset($_GET["cariDosen"]) ? $_GET["cariDosen"] : "", $hal_ke_dosen) ?>
+            <?php echo GeneratePageNumberDosen($DATA_PER_PAGE, 
+                                            $jumMahasiswas, 
+                                            $jumDosens, 
+                                            isset($_GET["cariMahasiswa"]) ? $_GET["cariMahasiswa"] : "", 
+                                            $hal_ke_mahasiswa, 
+                                            isset($_GET["cariDosen"]) ? $_GET["cariDosen"] : "", 
+                                            $hal_ke_dosen) ?>
         </div>
     </div>
 </body>
