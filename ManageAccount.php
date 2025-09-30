@@ -8,7 +8,7 @@ $DATA_PER_PAGE = 5;
 
 $hal_ke_mahasiswa = isset($_GET['pageMahasiswa']) ? $_GET['pageMahasiswa'] : 1;
 $hal_ke_dosen = isset($_GET['pageDosen']) ? $_GET['pageDosen'] : 1;
-if($hal_ke_dosen <= 0) {
+if ($hal_ke_dosen <= 0) {
     $hal_ke_dosen = 1;
 }
 
@@ -38,6 +38,7 @@ while ($row = $resMahasiswas->fetch_assoc()) {
     $isLecturer = "-";
     $isAdmin = "-";
     $nrpOrNpk = $row["nrp"];
+    $username = $row["username"];
     $foto = $row["foto_extention"];
 
     $hasilMahasiswa .= "<tr>";
@@ -46,7 +47,10 @@ while ($row = $resMahasiswas->fetch_assoc()) {
     $hasilMahasiswa .= "     <td>" . $foto . "</td>";
     $hasilMahasiswa .= "     <td>" . $isLecturer . "</td>";
     $hasilMahasiswa .= "     <td>" . $isAdmin . "</td>";
-    $hasilMahasiswa .= '     <td><a href="#" class="space">Edit</a><a href="#" class="space">Delete</a> </td>';
+    $hasilMahasiswa .= '     <td><a href="EditAccount.php?id=' . $nrpOrNpk . '&role=' . $isLecturer . '" class="space">Edit</a>
+    <a href="backend/DeleteAccountProcess.php?id=' . $nrpOrNpk . '&role=' . $isLecturer . '&username=' . $username . '&ext=' . $foto . '" class="space" 
+    onclick="return confirm(\'Are you sure you want to delete this account?\')">Delete</a>
+    </td>';
     $hasilMahasiswa .= "</tr>";
 }
 
@@ -55,6 +59,7 @@ while ($row = $resDosens->fetch_assoc()) {
     $isLecturer = "Iya";
     $isAdmin = "-";
     $nrpOrNpk = $row["npk"];
+    $username = $row["username"];
     $foto = $row["foto_extension"];
 
     $hasilDosen .= "<tr>";
@@ -63,7 +68,10 @@ while ($row = $resDosens->fetch_assoc()) {
     $hasilDosen .= "     <td>" . $foto . "</td>";
     $hasilDosen .= "     <td>" . $isLecturer . "</td>";
     $hasilDosen .= "     <td>" . $isAdmin . "</td>";
-    $hasilDosen .= '     <td><a href="#" class="space">Edit</a><a href="#" class="space">Delete</a> </td>';
+    $hasilDosen .= '     <td><a href="EditAccount.php?id=' . $nrpOrNpk . '&role=' . $isLecturer . '" class="space">Edit</a>
+    <a href="backend/DeleteAccountProcess.php?id=' . $nrpOrNpk . '&role=' . $isLecturer . '&username=' . $username . '&ext=' . $foto . '" class="space" 
+    onclick="return confirm(\'Are you sure you want to delete this account?\')">Delete</a>
+    </td>';
     $hasilDosen .= "</tr>";
 }
 ?>
@@ -73,7 +81,7 @@ while ($row = $resDosens->fetch_assoc()) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Account</title>
+    <title>Akun</title>
     <style>
         .space {
             margin: 10px;
@@ -90,6 +98,7 @@ while ($row = $resDosens->fetch_assoc()) {
 </head>
 
 <body>
+    <h2><a href="CreateAccount.php">Buat Akun</a></h2>
     <h1>Akun Mahasiswa</h1>
     <form action="" method="get" class="c-mb-1">
         <input type="text" value="<?php echo isset($_GET['cariMahasiswa']) ? $_GET['cariMahasiswa'] : "" ?>"

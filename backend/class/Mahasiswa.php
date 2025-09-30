@@ -46,4 +46,48 @@ class Mahasiswa extends Connection
         $res = $this->GetMahasiswa($limit, $offset, $keyword_search);
         return $res->num_rows;
     }
+
+    public function InsertMahasiswa($nrp, $nama, $gender, $tanggal_lahir, $angkatan, $foto_extention)
+    {
+        $sqlMahasiswa = "INSERT INTO mahasiswa (nrp, nama, gender, tanggal_lahir, angkatan,
+    foto_extention) VALUES (?, ?, ?, ?, ?, ?)";
+        $stmt = $this->mysqli->prepare($sqlMahasiswa);
+        $stmt->bind_param(
+            "ssssss",
+            $nrp,
+            $nama,
+            $gender,
+            $tanggal_lahir,
+            $angkatan,
+            $foto_extention
+        );
+        $stmt->execute();
+        $stmt->close();
+
+        return true;
+    }
+    public function UpdateMahasiswa($nrp, $nama, $gender, $tanggal_lahir, $angkatan, $foto_extention)
+    {
+        $sqlMahasiswa = "UPDATE mahasiswa SET nama = ?, gender = ?, tanggal_lahir = ?, 
+    angkatan = ?, foto_extention = ? WHERE nrp = ?";
+        $stmt = $this->mysqli->prepare($sqlMahasiswa);
+        $stmt->bind_param("ssssss", $nama, $gender, $tanggal_lahir, $angkatan, $foto_extention, $nrp);
+        $result = $stmt->execute();
+        $stmt->close();
+
+        return $result;
+    }
+    public function DeleteMahasiswa($nrp)
+    {
+        $sqlMahasiswa = "DELETE FROM mahasiswa WHERE nrp = ?";
+        $stmt = $this->mysqli->prepare($sqlMahasiswa);
+        $stmt->bind_param("s", $nrp);
+        $result = $stmt->execute();
+        $stmt->close();
+
+        return $result;
+    }
+
+
+
 }

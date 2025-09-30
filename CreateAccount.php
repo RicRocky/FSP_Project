@@ -8,11 +8,42 @@
         .hidden {
             display: none;
         }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+        .success {
+            color: green;
+            font-weight: bold;
+        }
     </style>
 </head>
 
 <body>
-    <form action="CreateAccountProcess .php" method="post" enctype="multipart/form-data">
+    <?php if (isset($_GET['error'])): ?>
+        <p class="error">
+            <?php
+            switch ($_GET['error']) {
+                case 'empty_fields':
+                    echo " All fields are required!";
+                    break;
+                case 'empty_fields_dosen':
+                    echo " Please fill all required fields for Dosen!";
+                    break;
+                case 'empty_fields_mhs':
+                    echo " Please fill all required fields for Mahasiswa!";
+                    break;
+                case 'invalid_image':
+                    echo " The uploaded file is not a valid image!";
+                    break;
+                default:
+                    echo " An unknown error occurred.";
+            }
+            ?>
+        </p>
+    <?php endif; ?>
+
+    <form action="backend/CreateAccountProcess.php" method="post" enctype="multipart/form-data">
         <p>
             <label for="role">Pilih Peran:</label>
             <select name="role" id="role">
@@ -22,39 +53,39 @@
         </p>
         <p>
             <label for="uname">Username:</label>
-            <input type="text" name="uname" required />
+            <input type="text" name="uname" />
         </p>
         <p>
             <label for="password">Password:</label>
-            <input type="password" name="password" id="password" required />
+            <input type="password" name="password" id="password" />
         </p>
 
         <div id="dosen">
             <p>
                 <label for="npk">NPK:</label>
-                <input type="text" name="npk" required />
+                <input type="text" name="npk" />
             </p>
             <p>
                 <label for="name">Name:</label>
-                <input type="text" name="name" required />
+                <input type="text" name="nameDsn" />
             </p>
             <p>
-                <label for="image">Photo:</label>
-                <input type="file" name="image" id="image" required>
+                <label for="imageDsn">Photo:</label>
+                <input type="file" name="imageDsn" id="imageDsn" accept="image/*">
             </p>
         </div>
         <div id="mahasiswa" class="hidden">
             <p>
                 <label for="nrp">NRP:</label>
-                <input type="text" name="nrp" required />
+                <input type="text" name="nrp" />
             </p>
             <p>
                 <label for="name">Name:</label>
-                <input type="text" name="name" required />
+                <input type="text" name="nameMhs" />
             </p>
             <p>
-                <label for="image">Photo:</label>
-                <input type="file" name="image" id="image" required>
+                <label for="imageMhs">Photo:</label>
+                <input type="file" name="imageMhs" id="imageMhs" accept="image/*">
             </p>
             <p>
                 <label>Gender:</label>
@@ -63,17 +94,18 @@
             </p>
             <p>
                 <label for="birth">Birthday:</label>
-                <input type="date" id="birth" name="birth" required>
+                <input type="date" id="birth" name="birth">
             </p>
             <p>
                 <label for="year">Year of:</label>
-                <input type="number" id="year" name="year" min="1900" max="2099" step="1" placeholder="YYYY" required>
+                <input type="number" id="year" name="year" min="1900" max="2099" step="1" placeholder="YYYY">
             </p>
         </div>
         <p>
             <input type="submit" name="submit" value="Add Account" />
         </p>
     </form>
+
     <script>
         $('body').on('change', '#role', function () {
             var selected = $(this).val();
@@ -81,10 +113,10 @@
                 $("#mahasiswa").hide();
                 $("#dosen").show();
             } else if (selected == 'mahasiswa') {
-                $("#mahasiswa").show();
                 $("#dosen").hide();
+                $("#mahasiswa").show();
             }
-        })
+        });
     </script>
 </body>
 

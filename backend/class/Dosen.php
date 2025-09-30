@@ -14,7 +14,7 @@ class Dosen extends Connection
         if ($npk != "") {
             $sql .= " WHERE d.npk LIKE ? OR a.username LIKE ? ";
         }
-        
+
         if (!is_null($offset)) {
             $sql .= " LIMIT ?, ?";
         }
@@ -28,7 +28,7 @@ class Dosen extends Connection
         } else if (is_null($offset) && $npk != "") {
             $npk = "%" . $npk . "%";
             $stmt->bind_param("ss", $npk, $npk);
-        
+
         } else if (!is_null($offset) && $npk == "") {
             $stmt->bind_param("ii", $offset, $limit);
         }
@@ -46,4 +46,39 @@ class Dosen extends Connection
         $res = $this->GetDosen($limit, $offset, $keyword_search);
         return $res->num_rows;
     }
+
+    public function InsertDosen($npk, $nama, $foto_extension)
+    {
+        $sqlDosen = "INSERT INTO dosen (npk, nama, foto_extension) VALUES (?, ?, ?)";
+        $stmt = $this->mysqli->prepare($sqlDosen);
+        $stmt->bind_param("sss", $npk, $nama, $foto_extension);
+        $stmt->execute();
+        $insert_id = $stmt->insert_id;
+        $stmt->close();
+
+        return $insert_id;
+    }
+    public function UpdateDosen($npk, $nama, $foto_extension)
+    {
+        $sqlDosen = "UPDATE dosen SET nama = ?, foto_extension = ? WHERE npk = ?";
+        $stmt = $this->mysqli->prepare($sqlDosen);
+        $stmt->bind_param("sss", $nama, $foto_extension, $npk);
+        $result = $stmt->execute();
+        $stmt->close();
+
+        return $result;
+    }
+
+    public function DeleteDosen($npk)
+    {
+        $sqlDosen = "DELETE FROM dosen WHERE npk = ?";
+        $stmt = $this->mysqli->prepare($sqlDosen);
+        $stmt->bind_param("s", $npk);
+        $result = $stmt->execute();
+        $stmt->close();
+
+        return $result; 
+    }
+
+
 }

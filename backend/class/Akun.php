@@ -28,7 +28,7 @@ class Akun extends Connection
         } else if (is_null($offset) && $keyword_search != "") {
             $keyword_search = "%" . $keyword_search . "%";
             $stmt->bind_param("sss", $keyword_search, $keyword_search, $keyword_search);
-        
+
         } else if (!is_null($offset) && $keyword_search == "") {
             $stmt->bind_param("ii", $offset, $limit);
         }
@@ -46,4 +46,60 @@ class Akun extends Connection
         $res = $this->GetAccount($keyword_search);
         return $res->num_rows;
     }
+
+    public function InsertAkun($username, $password, $isadmin = 0, $nrp = 0, $npk = 0)
+    {
+        if ($nrp != 0) {
+            $sqlAkun = "INSERT INTO akun (username, password, nrp_mahasiswa, isadmin) 
+                    VALUES (?, ?, ?, ?)";
+            $stmt = $this->mysqli->prepare($sqlAkun);
+            $stmt->bind_param("ssii", $username, $password, $nrp, $isadmin);
+        } else if ($npk != 0) {
+            $sqlAkun = "INSERT INTO akun (username, password, npk_dosen, isadmin) 
+                    VALUES (?, ?, ?, ?)";
+            $stmt = $this->mysqli->prepare($sqlAkun);
+            $stmt->bind_param("ssii", $username, $password, $npk, $isadmin);
+        } else {
+            return false;
+        }
+        $stmt->execute();
+        $stmt->close();
+        return true;
+    }
+
+    public function UpdateAkun($username, $password, $isadmin = 0, $nrp = 0, $npk = 0)
+    {
+        if ($nrp != 0) {
+            $sqlAkun = "UPDATE akun SET password = ?, nrp_mahasiswa = ?, isadmin = ? 
+            WHERE username = ?";
+            $stmt = $this->mysqli->prepare($sqlAkun);
+            $stmt->bind_param("ssis", $password, $nrp, $isadmin, $username);
+
+        } else if ($npk != 0) {
+            $sqlAkun = "UPDATE akun SET password = ?, npk_dosen = ?, isadmin = ? 
+            WHERE username = ?";
+            $stmt = $this->mysqli->prepare($sqlAkun);
+            $stmt->bind_param("ssis", $password, $npk, $isadmin, $username);
+
+        } else {
+            return false;
+        }
+        $result = $stmt->execute();
+        $stmt->close();
+        return $result;
+    }
+    public function DeleteAkun($username)
+    {
+        $sqlAkun = "DELETE FROM akun WHERE username = ?";
+        $stmt = $this->mysqli->prepare($sqlAkun);
+        $stmt->bind_param("s", $username);
+        $result = $stmt->execute();
+        $stmt->close();
+
+        return $result;
+    }
+
+
+
+
 }
