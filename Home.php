@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (!isset($_SESSION['user'])) {
+if (!isset($_SESSION['user']) ) {
     header("Location: login.php");
 }
 ?>
@@ -22,8 +22,8 @@ if (!isset($_SESSION['user'])) {
             <title>Document</title>
         </head>
         <body>
-            <h2>Selamat datang, <?php echo htmlspecialchars($_SESSION['user']); ?></h2>
-            <a href="logout.php">Logout</a>
+            <h2>Selamat datang, <?php echo $_SESSION['user'] ?></h2>
+            <a href="backend/LogoutProcess.php">Logout</a>
             <br>
             <a href="ChangePassword.php">Ubah Password</a>
         </body>

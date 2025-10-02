@@ -99,7 +99,30 @@ class Akun extends Connection
         return $result;
     }
 
+    public function CheckLogin($username, $password)
+    {
+        $stmt = $this->mysqli->prepare("SELECT * FROM akun WHERE username = ? AND password = ? LIMIT 1");
+        $stmt->bind_param("ss", $username, $password);
+        $stmt->execute();
+        $res = $stmt->get_result();
 
+        return $res;
+    }
 
+    public function GetPass($username)
+    {
+        $stmt = $this->mysqli->prepare("SELECT password FROM akun WHERE username = ?");
+        $stmt->bind_param("s", $username);
+        $stmt->execute();
+        $res = $stmt->get_result();
 
+        return $res;
+    }
+
+    public function ChangePass($username, $passBaru){
+        $stmt2 = $this->mysqli->prepare("UPDATE akun SET password = ? WHERE username = ?");
+        $stmt2->bind_param("ss", $passBaru, $username);
+        $stmt2->execute();
+        $res2 = $stmt2->get_result();
+    }
 }
