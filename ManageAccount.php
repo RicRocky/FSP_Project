@@ -5,11 +5,11 @@ require_once "backend/class/Dosen.php";
 require_once "backend/helper/Pagination.php";
 
 session_start();
-if(isset($_SESSION['isadmin'])){
-    if($_SESSION['isadmin'] == 0){
+if (isset($_SESSION['isadmin'])) {
+    if ($_SESSION['isadmin'] == 0) {
         header("Location: Login.php");
     }
-}else{
+} else {
     header('Location: Login.php');
 }
 
@@ -22,7 +22,7 @@ $hal_ke_mahasiswa = isset($_GET['pageMahasiswa']) ? $_GET['pageMahasiswa'] : 1; 
 $offset_mahasiswa = $DATA_PER_PAGE * ($hal_ke_mahasiswa - 1);       // Start Data Mahasiswa
 
 $mahasiswas = new Mahasiswa();
-$resMahasiswas = $mahasiswas->GetMahasiswa($DATA_PER_PAGE, $offset_mahasiswa, isset($_GET['cariMahasiswa'])? $_GET["cariMahasiswa"]: "");
+$resMahasiswas = $mahasiswas->GetMahasiswa($DATA_PER_PAGE, $offset_mahasiswa, isset($_GET['cariMahasiswa']) ? $_GET["cariMahasiswa"] : "");
 $jumMahasiswas = $mahasiswas->getTotalData($DATA_PER_PAGE, null, isset($_GET['cariMahasiswa']) ? $_GET['cariMahasiswa'] : "");
 $hasilMahasiswa = "";
 while ($resMahasiswa = $resMahasiswas->fetch_assoc()) {
@@ -39,7 +39,8 @@ while ($resMahasiswa = $resMahasiswas->fetch_assoc()) {
     $hasilMahasiswa .= "     <td>" . $isLecturer . "</td>";
     $hasilMahasiswa .= "     <td>" . $isAdmin . "</td>";
     $hasilMahasiswa .= '     <td><a href="EditAccount.php?id=' . $nrpOrNpk . '&role=' . $isLecturer . '" class="space">Edit</a>';
-    $hasilMahasiswa .= '         <a href="backend/DeleteAccountProcess.php?id=' . $nrpOrNpk . '&role=' . $isLecturer . '&username=' . $username . '&ext=' . $foto . '" class="space" onclick="return confirm(\'Are you sure you want to delete this account?\')">Delete</a></td>';
+    $hasilMahasiswa .= '         <a href="backend/DeleteAccountProcess.php?id=<?php echo $nrpOrNpk; ?>&role=<?php echo $isLecturer; ?>&username=<?php echo $username; ?>&ext=<?php echo $foto; ?>" class="space delete-link">Delete</a>
+</td>';
     $hasilMahasiswa .= "</tr>";
 }
 
@@ -65,10 +66,9 @@ while ($row = $resDosens->fetch_assoc()) {
     $hasilDosen .= "     <td> <img src='img/" . $foto . "' alt='-' width='100px'></td>";
     $hasilDosen .= "     <td>" . $isLecturer . "</td>";
     $hasilDosen .= "     <td>" . $isAdmin . "</td>";
-    $hasilDosen .= '     <td><a href="EditAccount.php?id=' . $nrpOrNpk . '&role=' . $isLecturer . '" class="space">Edit</a>
-    <a href="backend/DeleteAccountProcess.php?id=' . $nrpOrNpk . '&role=' . $isLecturer . '&username=' . $username . '&ext=' . $foto . '" class="space" 
-    onclick="return confirm(\'Are you sure you want to delete this account?\')">Delete</a>
-    </td>';
+    $hasilDosen .= '     <td><a href="backend/DeleteAccountProcess.php?id=<?php echo $nrpOrNpk; ?>&role=<?php echo $isLecturer; ?>&username=<?php echo $username; ?>&ext=<?php echo $foto; ?>" 
+       class="space delete-link">Delete</a>
+</td>';
     $hasilDosen .= "</tr>";
 }
 ?>
@@ -119,13 +119,15 @@ while ($row = $resDosens->fetch_assoc()) {
             </tbody>
         </table>
         <div class="c-mt-1">
-            <?php echo GeneratePageNumberMahasiswa($DATA_PER_PAGE, 
-                                                $jumMahasiswas, 
-                                                $jumDosens, 
-                                                isset($_GET["cariMahasiswa"]) ? $_GET["cariMahasiswa"] : "", 
-                                                $hal_ke_mahasiswa, 
-                                                isset($_GET["cariDosen"]) ? $_GET["cariDosen"] : "", 
-                                                $hal_ke_dosen) ?>
+            <?php echo GeneratePageNumberMahasiswa(
+                $DATA_PER_PAGE,
+                $jumMahasiswas,
+                $jumDosens,
+                isset($_GET["cariMahasiswa"]) ? $_GET["cariMahasiswa"] : "",
+                $hal_ke_mahasiswa,
+                isset($_GET["cariDosen"]) ? $_GET["cariDosen"] : "",
+                $hal_ke_dosen
+            ) ?>
         </div>
     </div>
 
@@ -151,13 +153,15 @@ while ($row = $resDosens->fetch_assoc()) {
             </tbody>
         </table>
         <div class="c-mt-1">
-            <?php echo GeneratePageNumberDosen($DATA_PER_PAGE, 
-                                            $jumMahasiswas, 
-                                            $jumDosens, 
-                                            isset($_GET["cariMahasiswa"]) ? $_GET["cariMahasiswa"] : "", 
-                                            $hal_ke_mahasiswa, 
-                                            isset($_GET["cariDosen"]) ? $_GET["cariDosen"] : "", 
-                                            $hal_ke_dosen) ?>
+            <?php echo GeneratePageNumberDosen(
+                $DATA_PER_PAGE,
+                $jumMahasiswas,
+                $jumDosens,
+                isset($_GET["cariMahasiswa"]) ? $_GET["cariMahasiswa"] : "",
+                $hal_ke_mahasiswa,
+                isset($_GET["cariDosen"]) ? $_GET["cariDosen"] : "",
+                $hal_ke_dosen
+            ) ?>
         </div>
     </div>
 </body>
@@ -173,6 +177,9 @@ while ($row = $resDosens->fetch_assoc()) {
             $("#dosen").hide();
         }
     })
+    $(".delete-link").click(function () {
+        return confirm("Are you sure you want to delete this account?");
+    });
 </script>
 
 </html>
