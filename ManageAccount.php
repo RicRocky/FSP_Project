@@ -31,15 +31,15 @@ while ($resMahasiswa = $resMahasiswas->fetch_assoc()) {
     $nrpOrNpk = $resMahasiswa["nrp"];
     $username = $resMahasiswa["username"];
     $foto = $nrpOrNpk . "." . $resMahasiswa["foto_extention"];
-    
+
     $hasilMahasiswa .= "<tr>";
     $hasilMahasiswa .= "     <td>" . $nrpOrNpk . "</td>";
     $hasilMahasiswa .= "     <td>" . $resMahasiswa["username"] . "</td>";
-    $hasilMahasiswa .= "     <td> <img src='img/". $foto . "' alt='-' width='100px'></td>";
+    $hasilMahasiswa .= "     <td> <img src='img/" . $foto . "' alt='-' width='100px'></td>";
     $hasilMahasiswa .= "     <td>" . $isLecturer . "</td>";
     $hasilMahasiswa .= "     <td>" . $isAdmin . "</td>";
     $hasilMahasiswa .= '     <td><a href="EditAccount.php?id=' . $nrpOrNpk . '&role=' . $isLecturer . '" class="space">Edit</a>';
-    $hasilMahasiswa .= '         <a href="backend/DeleteAccountProcess.php?id=<?php echo $nrpOrNpk; ?>&role=<?php echo $isLecturer; ?>&username=<?php echo $username; ?>&ext=<?php echo $foto; ?>" class="space delete-link">Delete</a>
+    $hasilMahasiswa .= '         <a href="backend/DeleteAccountProcess.php?id=' . $nrpOrNpk . '&role=' . $isLecturer . '&username=' . $username . '&ext=' . $foto . '" class="space delete-link">Delete</a>
 </td>';
     $hasilMahasiswa .= "</tr>";
 }
@@ -59,15 +59,19 @@ while ($row = $resDosens->fetch_assoc()) {
     $nrpOrNpk = $row["npk"];
     $username = $row["username"];
     $foto = $nrpOrNpk . "." . $row["foto_extension"];
-    
+
     $hasilDosen .= "<tr>";
     $hasilDosen .= "     <td>" . $nrpOrNpk . "</td>";
     $hasilDosen .= "     <td>" . $row["username"] . "</td>";
     $hasilDosen .= "     <td> <img src='img/" . $foto . "' alt='-' width='100px'></td>";
     $hasilDosen .= "     <td>" . $isLecturer . "</td>";
     $hasilDosen .= "     <td>" . $isAdmin . "</td>";
-    $hasilDosen .= '     <td><a href="backend/DeleteAccountProcess.php?id=<?php echo $nrpOrNpk; ?>&role=<?php echo $isLecturer; ?>&username=<?php echo $username; ?>&ext=<?php echo $foto; ?>" 
-       class="space delete-link">Delete</a>
+    $hasilDosen .= '     <td><a href="EditAccount.php?id=' . $nrpOrNpk . '&role=' . $isLecturer . '" class="space">Edit</a>'
+        . '<a href="backend/DeleteAccountProcess.php?id=' . $nrpOrNpk .
+        '&role=' . $isLecturer .
+        '&username=' . $username .
+        '&ext=' . $foto .
+        '" class="space delete-link">Delete</a>
 </td>';
     $hasilDosen .= "</tr>";
 }
