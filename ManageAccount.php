@@ -14,7 +14,6 @@ $offset_mahasiswa = $DATA_PER_PAGE * ($hal_ke_mahasiswa - 1);       // Start Dat
 $mahasiswas = new Mahasiswa();
 $resMahasiswas = $mahasiswas->GetMahasiswa($DATA_PER_PAGE, $offset_mahasiswa, isset($_GET['cariMahasiswa'])? $_GET["cariMahasiswa"]: "");
 $jumMahasiswas = $mahasiswas->getTotalData($DATA_PER_PAGE, null, isset($_GET['cariMahasiswa']) ? $_GET['cariMahasiswa'] : "");
-
 $hasilMahasiswa = "";
 while ($resMahasiswa = $resMahasiswas->fetch_assoc()) {
     $isLecturer = "-";
@@ -22,7 +21,7 @@ while ($resMahasiswa = $resMahasiswas->fetch_assoc()) {
     $nrpOrNpk = $resMahasiswa["nrp"];
     $username = $resMahasiswa["username"];
     $foto = $resMahasiswa["foto_extention"];
-
+    
     $hasilMahasiswa .= "<tr>";
     $hasilMahasiswa .= "     <td>" . $nrpOrNpk . "</td>";
     $hasilMahasiswa .= "     <td>" . $resMahasiswa["username"] . "</td>";
@@ -42,7 +41,6 @@ $offset_dosen = $DATA_PER_PAGE * ($hal_ke_dosen - 1);   // Start Data Mahasiswa
 $dosens = new Dosen();
 $resDosens = $dosens->GetDosen($DATA_PER_PAGE, $offset_dosen, isset($_GET["cariDosen"]) ? $_GET["cariDosen"] : "");
 $jumDosens = $dosens->getTotalData($DATA_PER_PAGE, null, isset($_GET['cariDosen']) ? $_GET['cariDosen'] : "");
-
 $hasilDosen = "";
 while ($row = $resDosens->fetch_assoc()) {
     $isLecturer = "Iya";
@@ -50,7 +48,7 @@ while ($row = $resDosens->fetch_assoc()) {
     $nrpOrNpk = $row["npk"];
     $username = $row["username"];
     $foto = $row["foto_extension"];
-
+    
     $hasilDosen .= "<tr>";
     $hasilDosen .= "     <td>" . $nrpOrNpk . "</td>";
     $hasilDosen .= "     <td>" . $row["username"] . "</td>";

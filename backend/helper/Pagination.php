@@ -73,7 +73,7 @@ function GeneratePageNumberDosen($DATA_PER_PAGE, $TOTAL_DATA_MAHASISWA, $TOTAL_D
         $hasil .= "&nbsp";
     }
 
-    for ($i = 1; $i <= $MAX_PAGE_MAHASISWA; $i++) {
+    for ($i = 1; $i <= $MAX_PAGE_DOSEN; $i++) {
         if ($HALAMAN_KE_DOSEN == $i) {
             $hasil .= "<span>" . $i . "</span>";
             $hasil .= "&nbsp";
