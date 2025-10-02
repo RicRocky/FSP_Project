@@ -28,9 +28,7 @@ if (!isset($_SESSION['user'])) {
     </form>
     <?php
     if (isset($_GET['status'])) {
-        if ($_GET['status'] == "3") {
-            echo "<p style='color:green;'>Password berhasil diganti!</p>";
-        } else if ($_GET['status'] == "1") {
+        if ($_GET['status'] == "1") {
             echo "<p style='color:red;'>Password konfirmasi dan password baru tidak sama.</p>";
         } else {
             echo "<p style='color:red;'>Terjadi kesalahan saat mengganti password.</p>";

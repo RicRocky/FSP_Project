@@ -30,7 +30,7 @@ else {
             header("Location: ../ChangePassword.php?status=2");
         } else {
             $akun->ChangePass($username, $passBaru);
-            header("Location: ../ChangePassword.php?status=3");
+            header("Location: ../Home.php?status=3");
         }
     }
 }
