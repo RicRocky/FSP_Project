@@ -4,6 +4,16 @@ require_once "backend/class/Mahasiswa.php";
 require_once "backend/class/Dosen.php";
 require_once "backend/helper/Pagination.php";
 
+session_start();
+if(isset($_SESSION['isadmin'])){
+    if($_SESSION['isadmin'] == 0){
+        header("Location: Login.php");
+    }
+}else{
+    header('Location: Login.php');
+}
+
+
 $DATA_PER_PAGE = 7; // Jumlah data
 
 

@@ -2,6 +2,12 @@
 session_start();
 if (!isset($_SESSION['user']) ) {
     header("Location: login.php");
+    die();
+}
+
+if($_SESSION['isadmin']){
+    header("Location: ManageAccount.php");
+    die();
 }
 ?>
 <!DOCTYPE html>
