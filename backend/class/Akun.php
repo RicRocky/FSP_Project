@@ -53,12 +53,12 @@ class Akun extends Connection
             $sqlAkun = "INSERT INTO akun (username, password, nrp_mahasiswa, isadmin) 
                     VALUES (?, ?, ?, ?)";
             $stmt = $this->mysqli->prepare($sqlAkun);
-            $stmt->bind_param("ssii", $username, $password, $nrp, $isadmin);
+            $stmt->bind_param("sssi", $username, $password, $nrp, $isadmin);
         } else if ($npk != 0) {
             $sqlAkun = "INSERT INTO akun (username, password, npk_dosen, isadmin) 
                     VALUES (?, ?, ?, ?)";
             $stmt = $this->mysqli->prepare($sqlAkun);
-            $stmt->bind_param("ssii", $username, $password, $npk, $isadmin);
+            $stmt->bind_param("sssi", $username, $password, $npk, $isadmin);
         } else {
             return false;
         }

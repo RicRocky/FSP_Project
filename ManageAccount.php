@@ -39,7 +39,7 @@ while ($resMahasiswa = $resMahasiswas->fetch_assoc()) {
     $hasilMahasiswa .= "     <td>" . $isLecturer . "</td>";
     $hasilMahasiswa .= "     <td>" . $isAdmin . "</td>";
     $hasilMahasiswa .= '     <td><a href="EditAccount.php?id=' . $nrpOrNpk . '&role=' . $isLecturer . '" class="space">Edit</a>';
-    $hasilMahasiswa .= '         <a href="backend/DeleteAccountProcess.php?id=' . $nrpOrNpk . '&role=' . $isLecturer . '&username=' . $username . '&ext=' . $foto . '" class="space delete-link">Delete</a>
+    $hasilMahasiswa .= '         <a href="backend/DeleteAccountProcess.php?id=' . $nrpOrNpk . '&role=' . $isLecturer . '&username=' . $username . '&ext=' . $resMahasiswa["foto_extention"] . '" class="space delete-link">Delete</a>
 </td>';
     $hasilMahasiswa .= "</tr>";
 }
@@ -70,7 +70,7 @@ while ($row = $resDosens->fetch_assoc()) {
         . '<a href="backend/DeleteAccountProcess.php?id=' . $nrpOrNpk .
         '&role=' . $isLecturer .
         '&username=' . $username .
-        '&ext=' . $foto .
+        '&ext=' . $row["foto_extension"] .
         '" class="space delete-link">Delete</a>
 </td>';
     $hasilDosen .= "</tr>";

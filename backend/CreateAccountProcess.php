@@ -20,7 +20,6 @@ if (isset($_POST['submit'])) {
         $name = $_POST['nameDsn'] ?? '';
         $photoDsn = $_FILES['imageDsn'] ?? null;
 
-        $akun = new Akun();
         if ($npk == '' || $name == '' || empty($photoDsn['tmp_name'])) {
             header("Location: ../CreateAccount.php?error=empty_fields_dosen");
             exit;
@@ -34,7 +33,8 @@ if (isset($_POST['submit'])) {
 
         $ext = pathinfo($photoDsn['name'], PATHINFO_EXTENSION);
 
-        $dsn = new Dosen();
+        $dsn = new Dosen(); 
+        $akun = new Akun();
         $dsn->InsertDosen($npk, $name, $ext);
         $akun->InsertAkun($username, $password, 0, 0, $npk);
 
@@ -63,6 +63,7 @@ if (isset($_POST['submit'])) {
         $ext = pathinfo($photoMhs['name'], PATHINFO_EXTENSION);
       
         $mhs = new Mahasiswa();
+        $akun = new Akun();
         $mhs->InsertMahasiswa($nrp, $name, $gender, $birth, $year, $ext);
         $akun->InsertAkun($username, $password, 0, $nrp, 0);
 
