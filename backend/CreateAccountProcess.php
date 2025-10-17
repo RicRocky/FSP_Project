@@ -4,20 +4,18 @@ require_once __DIR__ . '/class/Mahasiswa.php';
 require_once __DIR__ . '/class/Dosen.php';
 
 if (isset($_POST['submit'])) {
-    $role = $_POST['role'] ?? '';
-    $username = $_POST['uname'] ?? '';
-    $password = $_POST['password'] ?? '';
+    $role = htmlentities($_POST['role']) ?? '';
+    $username = htmlentities($_POST['uname']) ?? '';
+    $password = htmlentities($_POST['password']) ?? '';
 
     if ($role == '' || $username == '' || $password == '') {
         header("Location: ../CreateAccount.php?error=empty_fields");
         exit;
     }
 
-    
-
     if ($role == 'dosen') {
-        $npk = $_POST['npk'] ?? '';
-        $name = $_POST['nameDsn'] ?? '';
+        $npk = htmlentities($_POST['npk']) ?? '';
+        $name = htmlentities($_POST['nameDsn']) ?? '';
         $photoDsn = $_FILES['imageDsn'] ?? null;
 
         if ($npk == '' || $name == '' || empty($photoDsn['tmp_name'])) {
@@ -33,7 +31,7 @@ if (isset($_POST['submit'])) {
 
         $ext = pathinfo($photoDsn['name'], PATHINFO_EXTENSION);
 
-        $dsn = new Dosen(); 
+        $dsn = new Dosen();
         $akun = new Akun();
         $dsn->InsertDosen($npk, $name, $ext);
         $akun->InsertAkun($username, $password, 0, 0, $npk);
@@ -61,7 +59,7 @@ if (isset($_POST['submit'])) {
         }
 
         $ext = pathinfo($photoMhs['name'], PATHINFO_EXTENSION);
-      
+
         $mhs = new Mahasiswa();
         $akun = new Akun();
         $mhs->InsertMahasiswa($nrp, $name, $gender, $birth, $year, $ext);

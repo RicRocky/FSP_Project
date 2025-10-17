@@ -1,0 +1,22 @@
+body {
+    padding: 0px 5px;
+    background-color: #ABE1FB;
+}
+
+form {
+    padding: 10px 17px;
+    background-color: aliceblue;
+    border-radius: 15px;
+}
+
+input {
+    width: 100%;
+}
+
+.c-lpass {
+    margin-top: 5px;
+}
+
+button {
+    margin-top: 15px;
+}

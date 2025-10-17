@@ -5,20 +5,17 @@ require_once "backend/class/Dosen.php";
 require_once "backend/helper/Pagination.php";
 
 session_start();
-if (isset($_SESSION['isadmin'])) {
-    if ($_SESSION['isadmin'] == 0) {
-        header("Location: Login.php");
-    }
-} else {
+if (!isset($_SESSION['isadmin']) || $_SESSION['isadmin'] != 1) {
     header('Location: Login.php');
 }
 
-
 $DATA_PER_PAGE = 7; // Jumlah data
-
 
 // Pagination mahasiswa
 $hal_ke_mahasiswa = isset($_GET['pageMahasiswa']) ? $_GET['pageMahasiswa'] : 1;     // Halaman mahasiswa saat ini
+if(!is_numeric($hal_ke_mahasiswa)){
+    header("Location: ManageAccount.php");
+}
 $offset_mahasiswa = $DATA_PER_PAGE * ($hal_ke_mahasiswa - 1);       // Start Data Mahasiswa
 
 $mahasiswas = new Mahasiswa();
@@ -47,6 +44,9 @@ while ($resMahasiswa = $resMahasiswas->fetch_assoc()) {
 
 // Pagination Dosen
 $hal_ke_dosen = isset($_GET['pageDosen']) ? $_GET['pageDosen'] : 1;     // Halaman dosen saat ini
+if(!is_numeric($hal_ke_dosen)){
+    header("Location: ManageAccount.php");
+}
 $offset_dosen = $DATA_PER_PAGE * ($hal_ke_dosen - 1);   // Start Data Mahasiswa
 
 $dosens = new Dosen();
@@ -83,91 +83,94 @@ while ($row = $resDosens->fetch_assoc()) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Akun</title>
-    <style>
-        .space {
-            margin: 10px;
-        }
-
-        .c-mb-1 {
-            margin-bottom: 0.5rem;
-        }
-
-        .c-mt-1 {
-            margin-top: 0.5rem;
-        }
-    </style>
+    <link rel="stylesheet" href="css/pageManageAccount.css">
 </head>
 
 <body>
-    <h2><a href="CreateAccount.php">Buat Akun</a></h2>
-    <h1>Akun Mahasiswa</h1>
-    <form action="" method="get" class="c-mb-1">
-        <input type="text" value="<?php echo isset($_GET['cariMahasiswa']) ? $_GET['cariMahasiswa'] : "" ?>"
-            name="cariMahasiswa">
-        <button>Cari</button>
-    </form>
-    <div>
-        <table border="1" cellspacing="0" cellpadding="5">
-            <thead>
-                <tr>
-                    <th>NRP</th>
-                    <th>Name</th>
-                    <th>Photo</th>
-                    <th>Is Lecturer?</th>
-                    <th>Is Admin?</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php echo $hasilMahasiswa; ?>
-            </tbody>
-        </table>
-        <div class="c-mt-1">
-            <?php echo GeneratePageNumberMahasiswa(
-                $DATA_PER_PAGE,
-                $jumMahasiswas,
-                $jumDosens,
-                isset($_GET["cariMahasiswa"]) ? $_GET["cariMahasiswa"] : "",
-                $hal_ke_mahasiswa,
-                isset($_GET["cariDosen"]) ? $_GET["cariDosen"] : "",
-                $hal_ke_dosen
-            ) ?>
-        </div>
-    </div>
+    <main>
+        <h2>Daftar Akun</h2>
+        <section>
+            <h3 class="c-judul-table">Akun Mahasiswa</h3>
+            <form action="" method="get" class="c-mb-1">
+                <input type="text" vhalue="<?php echo isset($_GET['cariMahasiswa']) ? $_GET['cariMahasiswa'] : "" ?>"
+                    name="cariMahasiswa">
+                <button>Cari</button>
+            </form>
 
-    <h1>Akun Dosen</h1>
-    <form action="" method="get" class="c-mb-1">
-        <input type="text" value="<?php echo isset($_GET['cariDosen']) ? $_GET['cariDosen'] : "" ?>" name="cariDosen">
-        <button>Cari</button>
-    </form>
-    <div>
-        <table border="1" cellspacing="0" cellpadding="5">
-            <thead>
-                <tr>
-                    <th>NRP</th>
-                    <th>Name</th>
-                    <th>Photo</th>
-                    <th>Is Lecturer?</th>
-                    <th>Is Admin?</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php echo $hasilDosen; ?>
-            </tbody>
-        </table>
-        <div class="c-mt-1">
-            <?php echo GeneratePageNumberDosen(
-                $DATA_PER_PAGE,
-                $jumMahasiswas,
-                $jumDosens,
-                isset($_GET["cariMahasiswa"]) ? $_GET["cariMahasiswa"] : "",
-                $hal_ke_mahasiswa,
-                isset($_GET["cariDosen"]) ? $_GET["cariDosen"] : "",
-                $hal_ke_dosen
-            ) ?>
-        </div>
-    </div>
+            <table border="1" cellspacing="0" cellpadding="5">
+                <thead>
+                    <tr class="c-thead">
+                        <th>NRP</th>
+                        <th>Name</th>
+                        <th>Photo</th>
+                        <th>Is Lecturer?</th>
+                        <th>Is Admin?</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php echo $hasilMahasiswa; ?>
+                </tbody>
+            </table>
+            <div class="c-mt-2 ">
+                <?php echo GeneratePageNumberMahasiswa(
+                    $DATA_PER_PAGE,
+                    $jumMahasiswas,
+                    $jumDosens,
+                    isset($_GET["cariMahasiswa"]) ? $_GET["cariMahasiswa"] : "",
+                    $hal_ke_mahasiswa,
+                    isset($_GET["cariDosen"]) ? $_GET["cariDosen"] : "",
+                    $hal_ke_dosen
+                ) ?>
+            </div>
+        </section>
+
+        <section>
+            <h3 class="c-judul-table">Akun Dosen</h3>
+            <form action="" method="get" class="c-mb-1">
+                <input type="text" value="<?php echo isset($_GET['cariDosen']) ? $_GET['cariDosen'] : "" ?>"
+                    name="cariDosen">
+                <button>Cari</button>
+            </form>
+
+            <table border="1" cellspacing="0" cellpadding="5">
+                <thead>
+                    <tr class="c-thead">
+                        <th>NRP</th>
+                        <th>Name</th>
+                        <th>Photo</th>
+                        <th>Is Lecturer?</th>
+                        <th>Is Admin?</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php echo $hasilDosen; ?>
+                </tbody>
+            </table>
+            <div class="c-mt-2 ">
+                <?php echo GeneratePageNumberDosen(
+                    $DATA_PER_PAGE,
+                    $jumMahasiswas,
+                    $jumDosens,
+                    isset($_GET["cariMahasiswa"]) ? $_GET["cariMahasiswa"] : "",
+                    $hal_ke_mahasiswa,
+                    isset($_GET["cariDosen"]) ? $_GET["cariDosen"] : "",
+                    $hal_ke_dosen
+                ) ?>
+            </div>
+        </section>
+
+        <section>
+            <div>
+                <h3>Buat Akun Baru</h3>
+                <a href="CreateAccount.php">
+                    <img src="img/asset/add-user.png" alt="- " class="c-add-user">
+                    Buat Akun
+                </a>
+            </div>
+        </section>
+    </main>
 </body>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script>

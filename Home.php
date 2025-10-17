@@ -17,13 +17,20 @@ if ($_SESSION['isadmin']) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="css/pageHome.css">
 </head>
 
 <body>
-    <h2>Selamat datang, <?php echo $_SESSION['user'] ?></h2>
-    <a href="backend/LogoutProcess.php">Logout</a>
-    <br>
-    <a href="ChangePassword.php">Ubah Password</a>
+    <main>
+        <h2>Selamat Datang <span class="c-susername"><?php echo $_SESSION['user'] ?></span>!!</h2>
+        <section class="c-card">
+            <img src="img/asset/ganti-password.png">
+            <p><a href="ChangePassword.php">Ubah Password</a></p>
+        </section>
+        <section class="">
+            <p><a href="backend/LogoutProcess.php">Logout</a></p>
+        </section>
+    </main>
 </body>
 
 <script>

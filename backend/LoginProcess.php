@@ -22,7 +22,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
         // Login gagal
         header("Location: ../login.php?error=Username atau password salah");
     }
-    
+
 } else {
     header("Location: ../login.php?error=Form tidak lengkap");
 }

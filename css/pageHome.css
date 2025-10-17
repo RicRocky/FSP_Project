@@ -1,0 +1,21 @@
+body {
+    padding: 0px 5px;
+    background-color: #ABE1FB;
+}
+.c-susername{
+    color:darkslategrey;
+}
+.c-card{
+    padding: 1%;
+    width: 10vw;
+    min-width: 100px;
+    border-radius: 7%;
+    text-align: center;
+    background-color: whitesmoke;
+}
+.c-card img {
+    width: 94%;
+}
+.c-card p {
+    padding-bottom: 20px;
+}

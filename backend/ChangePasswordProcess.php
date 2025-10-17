@@ -6,10 +6,10 @@ if (!isset($_SESSION['user'])) {
     header("Location: login.php");
 }
 
-$username = $_SESSION['user'];
-$passLama = $_POST['passLama'];
-$passBaru = $_POST['passBaru'];
-$konfirmasi = $_POST['konfirmasi'];
+$username =htmlentities($_SESSION['user']);
+$passLama = htmlentities($_POST['passLama']);
+$passBaru = htmlentities($_POST['passBaru']);
+$konfirmasi = htmlentities($_POST['konfirmasi']);
 
 // cek konfirmasi password
 print_r($passLama);
@@ -19,8 +19,7 @@ var_dump($passBaru == $konfirmasi); // false
 
 if ($passBaru !== $konfirmasi) { // true baru jln
     header("Location: ../ChangePassword.php?status=1");
-}
-else {
+} else {
     $akun = new Akun();
     $res = $akun->GetPass($username);
     if ($row = $res->fetch_assoc()) {

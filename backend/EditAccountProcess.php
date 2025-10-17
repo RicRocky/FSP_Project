@@ -4,17 +4,16 @@ require_once __DIR__ . '/class/Mahasiswa.php';
 require_once __DIR__ . '/class/Dosen.php';
 
 if (isset($_POST['submit'])) {
-    $role = $_POST['roleEdit'];
-    $username = $_POST['uname'];
-    $password = $_POST['password'];
+    $role = htmlentities($_POST['roleEdit']);
+    $username = htmlentities($_POST['uname']);
+    $password = htmlentities($_POST['password']);
 
     $akun = new Akun();
 
     if ($role == 'Iya') {
         $dsn = new Dosen();
-        $npk = $_POST['npk'];
-        $name = $_POST['nameDsn'];
-
+        $npk = htmlentities($_POST['npk']);
+        $name = htmlentities($_POST['nameDsn']);
 
         $resDsn = $dsn->GetDosen(1, null, $npk)->fetch_assoc();
         $resAkun = $akun->GetAccount($npk, 1, null)->fetch_assoc();
@@ -35,20 +34,23 @@ if (isset($_POST['submit'])) {
             }
         }
 
-        if ($name == '') $name = $resDsn['nama'];
-        if ($username == '') $username = $resAkun['username'];
-        if ($password == '') $password = $resAkun['password'];
+        if ($name == '')
+            $name = $resDsn['nama'];
+        if ($username == '')
+            $username = $resAkun['username'];
+        if ($password == '')
+            $password = $resAkun['password'];
 
         $akun->UpdateAkun($username, $password, 0, 0, $npk);
         $dsn->UpdateDosen($npk, $name, $ext);
 
     } else if ($role == '-') {
         $mhs = new Mahasiswa();
-        $nrp = $_POST['nrp'];
-        $name = $_POST['nameMhs'];
-        $gender = $_POST['gender'] ?? '';
-        $birth = $_POST['birth'] ?? '';
-        $year = $_POST['year'] ?? '';
+        $nrp = htmlentities($_POST['nrp']);
+        $name = htmlentities($_POST['nameMhs']);
+        $gender = htmlentities($_POST['gender']) ?? '';
+        $birth = htmlentities($_POST['birth']) ?? '';
+        $year = htmlentities($_POST['year']) ?? '';
 
         $resMhs = $mhs->GetMahasiswa(1, null, $nrp)->fetch_assoc();
         $resAkun = $akun->GetAccount($nrp, 1, null)->fetch_assoc();
@@ -69,12 +71,18 @@ if (isset($_POST['submit'])) {
             }
         }
 
-        if ($name == '') $name = $resMhs['nama'];
-        if ($gender == '') $gender = $resMhs['gender'];
-        if ($birth == '') $birth = $resMhs['tanggal_lahir'];
-        if ($year == '') $year = $resMhs['angkatan'];
-        if ($username == '') $username = $resAkun['username'];
-        if ($password == '') $password = $resAkun['password'];
+        if ($name == '')
+            $name = $resMhs['nama'];
+        if ($gender == '')
+            $gender = $resMhs['gender'];
+        if ($birth == '')
+            $birth = $resMhs['tanggal_lahir'];
+        if ($year == '')
+            $year = $resMhs['angkatan'];
+        if ($username == '')
+            $username = $resAkun['username'];
+        if ($password == '')
+            $password = $resAkun['password'];
 
         $akun->UpdateAkun($username, $password, 0, $nrp, 0);
         $mhs->UpdateMahasiswa($nrp, $name, $gender, $birth, $year, $ext);

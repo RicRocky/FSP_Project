@@ -8,10 +8,10 @@ $mhs = new Mahasiswa();
 $dsn = new Dosen();
 
 if (isset($_GET['id']) && isset($_GET['role']) && isset($_GET['username']) && isset($_GET['ext'])) {
-    $id = $_GET['id'];
-    $role = $_GET['role'];
-    $username = $_GET['username'];
-    $ext = $_GET['ext'];
+    $id = htmlentities($_GET['id']);
+    $role = htmlentities($_GET['role']);
+    $username = htmlentities($_GET['username']);
+    $ext = htmlentities($_GET['ext']);
 
     if ($role === "Iya") {
         $akun->DeleteAkun($username);

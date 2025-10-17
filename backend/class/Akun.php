@@ -10,6 +10,12 @@ class Akun extends Connection
 
     public function GetAccount($keyword_search = "", $limit = 10, $offset = null)
     {
+        if(!is_string($keyword_search) || 
+            !is_numeric($limit) ||
+            is_string($offset)
+        ){
+            header("Location: ../../ManageAccount.php");
+        }
         $sql = "SELECT * FROM akun a";
         if ($keyword_search != "") {
             $sql .= " WHERE nrp_mahasiswa LIKE ? OR npk_dosen LIKE ? OR username LIKE ? ";
