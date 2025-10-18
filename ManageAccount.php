@@ -13,7 +13,7 @@ $DATA_PER_PAGE = 7; // Jumlah data
 
 // Pagination mahasiswa
 $hal_ke_mahasiswa = isset($_GET['pageMahasiswa']) ? $_GET['pageMahasiswa'] : 1;     // Halaman mahasiswa saat ini
-if(!is_numeric($hal_ke_mahasiswa)){
+if (!is_numeric($hal_ke_mahasiswa)) {
     header("Location: ManageAccount.php");
 }
 $offset_mahasiswa = $DATA_PER_PAGE * ($hal_ke_mahasiswa - 1);       // Start Data Mahasiswa
@@ -44,7 +44,7 @@ while ($resMahasiswa = $resMahasiswas->fetch_assoc()) {
 
 // Pagination Dosen
 $hal_ke_dosen = isset($_GET['pageDosen']) ? $_GET['pageDosen'] : 1;     // Halaman dosen saat ini
-if(!is_numeric($hal_ke_dosen)){
+if (!is_numeric($hal_ke_dosen)) {
     header("Location: ManageAccount.php");
 }
 $offset_dosen = $DATA_PER_PAGE * ($hal_ke_dosen - 1);   // Start Data Mahasiswa
@@ -92,8 +92,12 @@ while ($row = $resDosens->fetch_assoc()) {
         <section>
             <h3 class="c-judul-table">Akun Mahasiswa</h3>
             <form action="" method="get" class="c-mb-1">
-                <input type="text" vhalue="<?php echo isset($_GET['cariMahasiswa']) ? $_GET['cariMahasiswa'] : "" ?>"
+                <input type="text" value="<?php echo isset($_GET['cariMahasiswa']) ? $_GET['cariMahasiswa'] : "" ?>"
                     name="cariMahasiswa">
+                <input type="text" value="<?php echo $hal_ke_mahasiswa ?>" name="pageMahasiswa" hidden>
+                <input type="text" value="<?php echo isset($_GET["cariDosen"]) ? $_GET["cariDosen"] : "" ?>"
+                    name="cariDosen" hidden>
+                <input type="text" value="<?php echo $hal_ke_dosen ?>" name="pageDosen" hidden>
                 <button>Cari</button>
             </form>
 
@@ -130,6 +134,10 @@ while ($row = $resDosens->fetch_assoc()) {
             <form action="" method="get" class="c-mb-1">
                 <input type="text" value="<?php echo isset($_GET['cariDosen']) ? $_GET['cariDosen'] : "" ?>"
                     name="cariDosen">
+                <input type="text" value="<?php echo $hal_ke_mahasiswa ?>" name="pageMahasiswa" hidden>
+                <input type="text" value="<?php echo isset($_GET["cariMahasiswa"]) ? $_GET["cariMahasiswa"] : "" ?>"
+                    name="cariMahasiswa" hidden>
+                <input type="text" value="<?php echo $hal_ke_dosen ?>" name="pageDosen" hidden>
                 <button>Cari</button>
             </form>
 

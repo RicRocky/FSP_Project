@@ -6,7 +6,7 @@ require_once __DIR__ . '/class/Dosen.php';
 if (isset($_POST['submit'])) {
     $role = htmlentities($_POST['roleEdit']);
     $username = htmlentities($_POST['uname']);
-    $password = htmlentities($_POST['password']);
+    $password =  password_hash(htmlentities($_POST['password']), PASSWORD_DEFAULT);
 
     $akun = new Akun();
 

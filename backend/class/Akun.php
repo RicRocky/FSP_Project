@@ -10,10 +10,11 @@ class Akun extends Connection
 
     public function GetAccount($keyword_search = "", $limit = 10, $offset = null)
     {
-        if(!is_string($keyword_search) || 
+        if (
+            !is_string($keyword_search) ||
             !is_numeric($limit) ||
             is_string($offset)
-        ){
+        ) {
             header("Location: ../../ManageAccount.php");
         }
         $sql = "SELECT * FROM akun a";
@@ -107,12 +108,19 @@ class Akun extends Connection
 
     public function CheckLogin($username, $password)
     {
-        $stmt = $this->mysqli->prepare("SELECT * FROM akun WHERE username = ? AND password = ? LIMIT 1");
-        $stmt->bind_param("ss", $username, $password);
+        $stmt = $this->mysqli->prepare("SELECT * FROM akun WHERE username = ? LIMIT 1");
+        $stmt->bind_param("s", $username);
         $stmt->execute();
         $res = $stmt->get_result();
 
-        return $res;
+        $row = $res->fetch_assoc();
+        $is_authenticated = password_verify($password, $row["password"]);
+
+        if ($is_authenticated == 1) {
+            return $row;
+        }
+
+        return null;
     }
 
     public function GetPass($username)
@@ -125,7 +133,8 @@ class Akun extends Connection
         return $res;
     }
 
-    public function ChangePass($username, $passBaru){
+    public function ChangePass($username, $passBaru)
+    {
         $stmt2 = $this->mysqli->prepare("UPDATE akun SET password = ? WHERE username = ?");
         $stmt2->bind_param("ss", $passBaru, $username);
         $stmt2->execute();

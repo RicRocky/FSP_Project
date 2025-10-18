@@ -4,7 +4,7 @@ if (!isset($_SESSION['user'])) {
     header("Location: login.php");
     die();
 }
-if ($_SESSION['isadmin']) {
+if ($_SESSION['isadmin'] == 1) {
     header("Location: ManageAccount.php");
     die();
 }

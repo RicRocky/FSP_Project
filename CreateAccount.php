@@ -1,3 +1,21 @@
+<?php
+session_start();
+if (!isset($_SESSION['user'])) {
+    $domain = $_SERVER['HTTP_HOST'];
+    $path = $_SERVER['SCRIPT_NAME'];
+    $queryString = $_SERVER['QUERY_STRING'];
+    $url = "http://" . $domain . $path . "?" . $queryString;
+
+    header("Location: login.php?url=" . $url);
+    die();
+}
+
+if ($_SESSION['isadmin'] == 0) {
+    header("Location: Home.php");
+    die();
+}
+
+?>
 <!DOCTYPE html>
 <html>
 

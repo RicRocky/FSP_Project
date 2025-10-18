@@ -1,7 +1,9 @@
 <?php
 session_start();
-if (isset($_SESSION['user'])) {
+if (isset($_SESSION['isadmin']) && $_SESSION['isadmin'] == 0) {
     header("Location: Home.php");
+} else if (isset($_SESSION['isadmin']) && $_SESSION['isadmin'] == 1) {
+    header("Location: ManageAccount.php");
 }
 ?>
 <!DOCTYPE html>
@@ -23,6 +25,7 @@ if (isset($_SESSION['user'])) {
         <br>
         <label class="c-lpass">Password:</label>
         <input type="password" name="password" required><br>
+        <input type="text" name="url" value="<?php echo isset($_GET['url']) ? $_GET['url'] : "" ?>" hidden>
         <button type="submit">Login</button>
     </form>
 </body>

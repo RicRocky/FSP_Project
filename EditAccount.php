@@ -3,6 +3,24 @@ require_once "backend/class/Akun.php";
 require_once "backend/class/Mahasiswa.php";
 require_once "backend/class/Dosen.php";
 
+session_start();
+if (!isset($_SESSION['user'])) {
+    $domain = $_SERVER['HTTP_HOST'];
+    $path = $_SERVER['SCRIPT_NAME'];
+    $queryString = $_SERVER['QUERY_STRING'];
+    $url = "http://" . $domain . $path . "?" . $queryString;
+    // http://localhost/fullstack/Project/FSP_Project/EditAccount.php?id=2019001&role=-
+
+    header("Location: login.php?url=" . $url);
+    die();
+}
+
+if ($_SESSION['isadmin'] == 0) {
+    header("Location: Home.php");
+    die();
+}
+
+
 $akun = new Akun();
 $mhs = new Mahasiswa();
 $dsn = new Dosen();
@@ -34,11 +52,7 @@ if (isset($_GET['id']) && isset($_GET['role'])) {
 <head>
     <title>Edit Account</title>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <style>
-        .hidden {
-            display: none;
-        }
-    </style>
+    <link rel="stylesheet" href="css/pageEditAccount.css">
 </head>
 
 <body>
@@ -47,7 +61,7 @@ if (isset($_GET['id']) && isset($_GET['role'])) {
             <form action="backend/EditAccountProcess.php" method="post" enctype="multipart/form-data">
                 <p>
                     <label for="role">Peran:</label>
-                        <select id="role" disabled>
+                    <select id="role" disabled>
                         <option value="Iya" <?php if ($role == 'Iya')
                             echo 'selected'; ?>>Dosen</option>
                         <option value="-" <?php if ($role == '-')
@@ -57,14 +71,15 @@ if (isset($_GET['id']) && isset($_GET['role'])) {
                 </p>
                 <p>
                     <label for="uname">Username:</label>
-                    <input type="text" name="uname" value="<?php echo $resAkun ? $resAkun['username'] : ''; ?>" disabled />
+                    <input type="text" name="uname" value="<?php echo $resAkun ? $resAkun['username'] : ''; ?>"
+                        disabled />
                     <input type="hidden" name="uname" value="<?php echo $resAkun['username']; ?>">
                 </p>
                 <p>
                     <label for="password">Password:</label>
                     <input type="password" name="password" id="password" />
                 </p>
-        
+
                 <div id="dosen" <?php if ($role != 'Iya')
                     echo 'class="hidden"'; ?>>
                     <p>
@@ -86,8 +101,9 @@ if (isset($_GET['id']) && isset($_GET['role'])) {
                         <?php endif; ?>
                     </p>
                 </div>
-        
-                <div id="mahasiswa" <?php if ($role != '-') echo 'class="hidden"'; ?>>
+
+                <div id="mahasiswa" <?php if ($role != '-')
+                    echo 'class="hidden"'; ?>>
                     <p>
                         <label for="nrp">NRP:</label>
                         <input type="text" name="nrp" value="<?php echo $resMhs ? $resMhs['nrp'] : ''; ?>" disabled />
@@ -124,7 +140,7 @@ if (isset($_GET['id']) && isset($_GET['role'])) {
                             value="<?php echo $resMhs ? $resMhs['angkatan'] : ''; ?>">
                     </p>
                 </div>
-        
+
                 <p>
                     <input type="submit" name="submit" value="Save" />
                 </p>

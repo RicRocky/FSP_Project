@@ -2,7 +2,16 @@
 session_start();
 
 if (!isset($_SESSION['user'])) {
-    header("Location: login.php");
+    $domain = $_SERVER['HTTP_HOST'];
+    $path = $_SERVER['SCRIPT_NAME'];
+    $queryString = $_SERVER['QUERY_STRING'];
+    $url = "http://" . $domain . $path . "?" . $queryString;
+
+    header("Location: login.php?url=" . $url);
+}
+
+if ($_SESSION['isadmin'] == 1) {
+    header("Location: ManageAccount.php");
 }
 ?>
 <!DOCTYPE html>
@@ -12,6 +21,7 @@ if (!isset($_SESSION['user'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="css/pageChangePassword.css">
 </head>
 
 <body>
