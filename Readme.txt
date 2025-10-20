@@ -14,9 +14,7 @@ Password    : password
 Username    : 201800001 - 201800100
 Password    : password
 - Dosen
-1. Username    : 200101 - 200200 
-Password    : password
-2. Username    : 201001 - 201002
+Username    : 200001 - 200200
 Password    : password
 
 
