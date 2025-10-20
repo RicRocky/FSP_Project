@@ -115,10 +115,15 @@ class Akun extends Connection
 
         $row = $res->fetch_assoc();
         $is_authenticated = password_verify($password, $row["password"]);
+        print_r("Pass: " . $password);
+        print_r("<br>");
 
         if ($is_authenticated == 1) {
+            print_r("Kucing: " . $is_authenticated);
             return $row;
         }
+        print_r("Nilai: " . $is_authenticated);
+        die();
 
         return null;
     }

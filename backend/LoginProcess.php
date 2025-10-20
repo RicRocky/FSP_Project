@@ -14,12 +14,11 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     //Cek Login
     $akun = new Akun();
     $row = $akun->CheckLogin($username, $password);
-
     if ($row != null) {
         // Login berhasil
         $_SESSION['user'] = $row['username'];
         $_SESSION['isadmin'] = $row['isadmin'];
-
+        
         if ($_SESSION['isadmin'] == 0) {
             if ($url == "") {
                 header("Location: ../Home.php");
@@ -37,9 +36,11 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
                 die();
             }
         }
-
+        
     } else {
         // Login gagal
+        echo "null";
+        die();
         if ($url == "") {
             header("Location: ../login.php?error=Username atau password salah");
             die();

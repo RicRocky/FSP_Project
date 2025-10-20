@@ -15,6 +15,8 @@ class Dosen extends Connection
             $sql .= " WHERE d.npk LIKE ? OR a.username LIKE ? ";
         }
 
+        $sql .= " ORDER BY npk DESC";
+
         if (!is_null($offset)) {
             $sql .= " LIMIT ?, ?";
         }

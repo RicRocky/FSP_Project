@@ -26,12 +26,12 @@ while ($resMahasiswa = $resMahasiswas->fetch_assoc()) {
     $isLecturer = "-";
     $isAdmin = "-";
     $nrpOrNpk = $resMahasiswa["nrp"];
-    $username = $resMahasiswa["username"];
+    $username = $resMahasiswa["nama"];
     $foto = $nrpOrNpk . "." . $resMahasiswa["foto_extention"];
 
     $hasilMahasiswa .= "<tr>";
     $hasilMahasiswa .= "     <td>" . $nrpOrNpk . "</td>";
-    $hasilMahasiswa .= "     <td>" . $resMahasiswa["username"] . "</td>";
+    $hasilMahasiswa .= "     <td>" . $username . "</td>";
     $hasilMahasiswa .= "     <td> <img src='img/" . $foto . "' alt='-' width='100px'></td>";
     $hasilMahasiswa .= "     <td>" . $isLecturer . "</td>";
     $hasilMahasiswa .= "     <td>" . $isAdmin . "</td>";
@@ -57,12 +57,12 @@ while ($row = $resDosens->fetch_assoc()) {
     $isLecturer = "Iya";
     $isAdmin = "-";
     $nrpOrNpk = $row["npk"];
-    $username = $row["username"];
+    $username = $row["nama"];
     $foto = $nrpOrNpk . "." . $row["foto_extension"];
 
     $hasilDosen .= "<tr>";
     $hasilDosen .= "     <td>" . $nrpOrNpk . "</td>";
-    $hasilDosen .= "     <td>" . $row["username"] . "</td>";
+    $hasilDosen .= "     <td>" . $username . "</td>";
     $hasilDosen .= "     <td> <img src='img/" . $foto . "' alt='-' width='100px'></td>";
     $hasilDosen .= "     <td>" . $isLecturer . "</td>";
     $hasilDosen .= "     <td>" . $isAdmin . "</td>";
@@ -168,7 +168,7 @@ while ($row = $resDosens->fetch_assoc()) {
                 ) ?>
             </div>
         </section>
-
+        <br>
         <section>
             <div>
                 <h3>Buat Akun Baru</h3>
