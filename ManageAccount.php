@@ -94,7 +94,7 @@ while ($row = $resDosens->fetch_assoc()) {
             <form action="" method="get" class="c-mb-1">
                 <input type="text" value="<?php echo isset($_GET['cariMahasiswa']) ? $_GET['cariMahasiswa'] : "" ?>"
                     name="cariMahasiswa">
-                <input type="text" value="<?php echo $hal_ke_mahasiswa ?>" name="pageMahasiswa" hidden>
+                <input type="text" value="<?php echo 1 ?>" name="pageMahasiswa" hidden>
                 <input type="text" value="<?php echo isset($_GET["cariDosen"]) ? $_GET["cariDosen"] : "" ?>"
                     name="cariDosen" hidden>
                 <input type="text" value="<?php echo $hal_ke_dosen ?>" name="pageDosen" hidden>
@@ -137,7 +137,7 @@ while ($row = $resDosens->fetch_assoc()) {
                 <input type="text" value="<?php echo $hal_ke_mahasiswa ?>" name="pageMahasiswa" hidden>
                 <input type="text" value="<?php echo isset($_GET["cariMahasiswa"]) ? $_GET["cariMahasiswa"] : "" ?>"
                     name="cariMahasiswa" hidden>
-                <input type="text" value="<?php echo $hal_ke_dosen ?>" name="pageDosen" hidden>
+                <input type="text" value="<?php echo 1 ?>" name="pageDosen" hidden>
                 <button>Cari</button>
             </form>
 
