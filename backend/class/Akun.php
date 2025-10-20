@@ -115,15 +115,10 @@ class Akun extends Connection
 
         $row = $res->fetch_assoc();
         $is_authenticated = password_verify($password, $row["password"]);
-        print_r("Pass: " . $password);
-        print_r("<br>");
 
         if ($is_authenticated == 1) {
-            print_r("Kucing: " . $is_authenticated);
             return $row;
         }
-        print_r("Nilai: " . $is_authenticated);
-        die();
 
         return null;
     }
@@ -141,8 +136,10 @@ class Akun extends Connection
     public function ChangePass($username, $passBaru)
     {
         $stmt2 = $this->mysqli->prepare("UPDATE akun SET password = ? WHERE username = ?");
-        $stmt2->bind_param("ss", $passBaru, $username);
+        $pass = password_hash($passBaru , PASSWORD_DEFAULT);
+        $stmt2->bind_param("ss", $pass, $username);
         $stmt2->execute();
         $res2 = $stmt2->get_result();
     }
+
 }

@@ -20,10 +20,7 @@ function GeneratePageNumberMahasiswa(
                 "&pageDosen=" . $HALAMAN_KE_DOSEN .
                 "' class='c-nopage'>Previous</a>";
             $hasil .= "&nbsp";
-        } else {
-            $hasil .= "<span class='c-nopage'>Previous</span>";
-            $hasil .= "&nbsp";
-        }
+        } 
 
         for ($i = 1; $i <= $MAX_PAGE_MAHASISWA; $i++) {
             if ($HALAMAN_KE_MAHASISWA == $i) {
@@ -45,9 +42,6 @@ function GeneratePageNumberMahasiswa(
                 "&cariDosen=" . $CARI_DOSEN .
                 "&pageDosen=" . $HALAMAN_KE_DOSEN .
                 "' class='c-nopage'>Next</a>";
-            $hasil .= "&nbsp";
-        } else {
-            $hasil .= "<span class='c-nopage'>Next</span>";
             $hasil .= "&nbsp";
         }
     }
@@ -87,10 +81,7 @@ function GeneratePageNumberDosen(
                 "&pageDosen=" . ($HALAMAN_KE_DOSEN - 1) .
                 "' class='c-nopage'>Previous</a>";
             $hasil .= "&nbsp";
-        } else {
-            $hasil .= "<span class='c-nopage'>Previous</span>";
-            $hasil .= "&nbsp";
-        }
+        } 
 
         for ($i = 1; $i <= $MAX_PAGE_DOSEN; $i++) {
             if ($HALAMAN_KE_DOSEN == $i) {
@@ -113,10 +104,7 @@ function GeneratePageNumberDosen(
                 "&pageDosen=" . ($HALAMAN_KE_DOSEN + 1) .
                 "' class='c-nopage'>Next</a>";
             $hasil .= "&nbsp";
-        } else {
-            $hasil .= "<span class='c-nopage'>Next</span>";
-            $hasil .= "&nbsp";
-        }
+        } 
     }
 
     return $hasil;

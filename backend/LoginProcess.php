@@ -10,7 +10,6 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-
     //Cek Login
     $akun = new Akun();
     $row = $akun->CheckLogin($username, $password);
@@ -39,8 +38,6 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
         
     } else {
         // Login gagal
-        echo "null";
-        die();
         if ($url == "") {
             header("Location: ../login.php?error=Username atau password salah");
             die();

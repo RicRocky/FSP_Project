@@ -12,7 +12,7 @@ class Dosen extends Connection
     {
         $sql = "SELECT * FROM akun a INNER JOIN dosen d ON a.npk_dosen = d.npk";
         if ($npk != "") {
-            $sql .= " WHERE d.npk LIKE ? OR a.username LIKE ? ";
+            $sql .= " WHERE d.npk LIKE ? OR a.username LIKE ? OR d.nama LIKE ?";
         }
 
         $sql .= " ORDER BY npk DESC";
@@ -25,11 +25,11 @@ class Dosen extends Connection
 
         if (!is_null($offset) && $npk != "") {
             $npk = "%" . $npk . "%";
-            $stmt->bind_param("ssii", $npk, $npk, $offset, $limit);
+            $stmt->bind_param("sssii", $npk, $npk, $npk, $offset, $limit);
 
         } else if (is_null($offset) && $npk != "") {
             $npk = "%" . $npk . "%";
-            $stmt->bind_param("ss", $npk, $npk);
+            $stmt->bind_param("sss", $npk, $npk, $npk);
 
         } else if (!is_null($offset) && $npk == "") {
             $stmt->bind_param("ii", $offset, $limit);

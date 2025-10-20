@@ -19,6 +19,7 @@ if (isset($_SESSION['isadmin']) && $_SESSION['isadmin'] == 0) {
 <body>
     <h2>Form Login</h2>
 
+    <?php echo isset($_GET["error"])? $_GET["error"] : "" ?>
     <form method="post" action="backend/LoginProcess.php">
         <label>Username:</label>
         <input type="text" name="username" required><br>

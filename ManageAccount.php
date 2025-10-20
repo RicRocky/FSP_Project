@@ -144,7 +144,7 @@ while ($row = $resDosens->fetch_assoc()) {
             <table border="1" cellspacing="0" cellpadding="5">
                 <thead>
                     <tr class="c-thead">
-                        <th>NRP</th>
+                        <th>NPK</th>
                         <th>Name</th>
                         <th>Photo</th>
                         <th>Is Lecturer?</th>
@@ -177,6 +177,9 @@ while ($row = $resDosens->fetch_assoc()) {
                     Buat Akun
                 </a>
             </div>
+        </section>
+        <section class="">
+            <p>Logout: <a href="backend/LogoutProcess.php">Klik</a></p>
         </section>
     </main>
 </body>

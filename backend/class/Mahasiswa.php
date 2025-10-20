@@ -12,7 +12,7 @@ class Mahasiswa extends Connection
     {
         $sql = "SELECT * FROM akun a INNER JOIN mahasiswa m ON a.nrp_mahasiswa = m.nrp";
         if ($nrp != "") {
-            $sql .= " WHERE m.nrp LIKE ? OR a.username LIKE ? ";
+            $sql .= " WHERE m.nrp LIKE ? OR a.username LIKE ? OR m.nama LIKE ? ";
         }
 
         if (!is_null($offset)) {
@@ -23,11 +23,11 @@ class Mahasiswa extends Connection
 
         if (!is_null($offset) && $nrp != "") {
             $nrp = "%" . $nrp . "%";
-            $stmt->bind_param("ssii", $nrp, $nrp, $offset, $limit);
+            $stmt->bind_param("sssii", $nrp, $nrp, $nrp, $offset, $limit);
 
         } else if (is_null($offset) && $nrp != "") {
             $nrp = "%" . $nrp . "%";
-            $stmt->bind_param("ss", $nrp, $nrp);
+            $stmt->bind_param("sss", $nrp, $nrp, $nrp);
 
         } else if (!is_null($offset) && $nrp == "") {
             $stmt->bind_param("ii", $offset, $limit);

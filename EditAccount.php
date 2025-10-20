@@ -118,8 +118,8 @@ if (isset($_GET['id']) && isset($_GET['role'])) {
                         <input type="file" name="imageMhs" id="image" accept="image/*">
                         <?php if ($resMhs && !empty($resMhs['foto_extention'])): ?>
                             <br>
-                            <img src="img/<?php echo $resMhs['nrp'] . '.' . $resMhs['foto_extention']; ?>" width="120"
-                                style="margin-top:10px;">
+                            <div>Foto Sebelumnya:</div>
+                            <img src="img/<?php echo $resMhs['nrp'] . '.' . $resMhs['foto_extention']; ?>" width="120" style="margin-top:10px;">
                         <?php endif; ?>
                     </p>
                     <p>
