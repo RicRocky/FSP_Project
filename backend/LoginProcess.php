@@ -17,6 +17,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
         // Login berhasil
         $_SESSION['user'] = $row['username'];
         $_SESSION['isadmin'] = $row['isadmin'];
+        $_SESSION['role'] = $row['nrp_mahasiswa'] == null ? "dosen" : "mahasiswa";
         
         if ($_SESSION['isadmin'] == 0) {
             if ($url == "") {

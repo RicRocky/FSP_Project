@@ -23,10 +23,20 @@ if ($_SESSION['isadmin'] == 1) {
 <body>
     <main>
         <h2>Selamat Datang <span class="c-susername"><?php echo $_SESSION['user'] ?></span>!!</h2>
-        <section class="c-card">
-            <img src="img/asset/ganti-password.png">
-            <p><a href="ChangePassword.php">Ubah Password</a></p>
-        </section>
+        <div style="clear: both">
+            <div class="c-card">
+                <img src="img/asset/ganti-password.png">
+                <p><a href="ChangePassword.php">Ubah Password</a></p>
+            </div>
+            <?php
+            if($_SESSION['role'] == "dosen" || $_SESSION['isadmin'] == 1) {
+                echo '<div class="c-card">
+                <img src="img/asset/icon-group1.png">
+                <p><a href="ManageGroup.php">Lihat Daftar Group</a></p>
+            </div>';
+            }
+            ?>
+        </div>
         <section class="">
             <p><a href="backend/LogoutProcess.php">Logout</a></p>
         </section>
