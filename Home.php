@@ -23,21 +23,29 @@ if ($_SESSION['isadmin'] == 1) {
 <body>
     <main>
         <h2>Selamat Datang <span class="c-susername"><?php echo $_SESSION['user'] ?></span>!!</h2>
-        <div style="clear: both">
+        <div>
             <div class="c-card">
                 <img src="img/asset/ganti-password.png">
                 <p><a href="ChangePassword.php">Ubah Password</a></p>
             </div>
             <?php
-            if($_SESSION['role'] == "dosen" || $_SESSION['isadmin'] == 1) {
-                echo '<div class="c-card">
+            if($_SESSION['role'] == "dosen") {
+                echo '<div class="c-card mr-2">
                 <img src="img/asset/icon-group1.png">
                 <p><a href="ManageGroup.php">Lihat Daftar Group</a></p>
             </div>';
             }
+            if($_SESSION['role'] == "mahasiswa") {
+                echo '<div class="c-card mr-2">
+                <img src="img/asset/icon-group1.png">
+                <p><a href="ManageGroupMahasiswa.php">Group</a></p>
+            </div>';
+            }
             ?>
+            <div style="clear:both;"></div>
         </div>
         <section class="">
+            <br>
             <p><a href="backend/LogoutProcess.php">Logout</a></p>
         </section>
     </main>

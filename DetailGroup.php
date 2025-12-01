@@ -7,8 +7,11 @@ if (!isset($_SESSION['user'])) {
     die();
 }
 
-if (!isset($_GET['id'])) {
+if (!isset($_GET['id']) && $_SESSION["role"] == "dosen") {
     header("Location: ManageGroup.php");
+    die();
+}else if(!isset($_GET['id']) && $_SESSION["role"] == "mahasiswa"){
+    header("Location: ManageGroupMahasiswa.php");
     die();
 }
 

@@ -20,3 +20,7 @@ body {
 .c-card p {
     padding-bottom: 20px;
 }
+
+.mr-2{
+    margin-left: 2rem;
+}
