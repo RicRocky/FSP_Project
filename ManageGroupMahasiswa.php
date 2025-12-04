@@ -49,6 +49,7 @@
                 </tbody>
             </table>
         </section>
+        <a href="Home.php"><button>Kembali</button></a>
     </main>
 </body>
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
@@ -72,25 +73,28 @@
         },
     })
 
-    $.ajax({
-        url: "backend/MahasiswaGroup.php",
-        type: "post",
-        data: {
-            action: "LoadDataGrupPublic",
-        },
-        dataType: "json",
-        async: false,
-        cache: false,
-        success: function (data) {
-            TampilkanDataTableGrupPublic(data["data"]);
-            console.log(data);
-        },
-    })
+    LoadDataGrupPublic();
+
+    function LoadDataGrupPublic() {
+        $.ajax({
+            url: "backend/MahasiswaGroup.php",
+            type: "post",
+            data: {
+                action: "LoadDataGrupPublic",
+            },
+            dataType: "json",
+            async: false,
+            cache: false,
+            success: function (data) {
+                TampilkanDataTableGrupPublic(data["data"]);
+                console.log(data);
+            },
+        });
+    }
 
     $("body").on("click", "#btnBergabung", function () {
         Bergabung($("#kodeGroup").val());
     });
-
 
     function KeluarGroup(idgrup) {
         $.ajax({
@@ -114,6 +118,7 @@
                 }
             },
         })
+        LoadDataGrupPublic();
     }
 
     function TampilkanDataTableGrupMahasiswa(datas) {
@@ -121,7 +126,7 @@
         if (datas.length == 0) {
             nodeTBody.append(`
             <tr>
-            <td colspan="4" style="text-align: center;">Belum bergabung dengan grup.</td>
+            <td colspan="4" style="text-align: center;">Belum Bergabung Dengan Grup.</td>
             </tr>
             `)
         } else {
@@ -147,7 +152,7 @@
         if (datas.length == 0) {
             nodeTBodyPublic.append(`
                     <tr>
-                        <td colspan="4" style="text-align: center;">Belum bergabung dengan grup.</td>
+                        <td colspan="4" style="text-align: center;">Belum Terdapat Grup Public.</td>
                     </tr>
                 `)
         } else {
@@ -189,6 +194,7 @@
                 }
             },
         });
+        LoadDataGrupPublic();
     }
 </script>
 

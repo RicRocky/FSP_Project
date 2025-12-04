@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/class/Group.php';
+require_once __DIR__ . '/class/MemberGroup.php';
 if (isset($_POST['submit'])) {
     $groupName = $_POST['groupName'];
     $groupDescription = $_POST['groupDescription'];
