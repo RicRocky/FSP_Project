@@ -20,8 +20,9 @@ if ($_SESSION['isadmin'] == 0) {
 <html>
 
 <head>
-    <title>Create Account</title>
+    <title>Admin - Membuat Akun</title>
     <link rel="stylesheet" href="css/pageCreateAccount.css">
+    <link rel="stylesheet" href="css/template.css">
 </head>
 
 <body>

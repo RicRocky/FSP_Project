@@ -13,7 +13,8 @@ $row = $event->GetEvent($idevent);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Dosen - Edit Event</title>
+    <link rel="stylesheet" href="css/template.css">
 </head>
 
 <body>

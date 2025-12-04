@@ -27,29 +27,30 @@ $res = $group->GetGroupById($_GET['id']);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Group Details</title>
+    <title>Detail Grup</title>
+    <link rel="stylesheet" href="css/template.css">
 </head>
 
-<body style="background-color: black; color: white;">
+<body>
     <main>
-        <h1>Group name: <?php echo $res["nama"] ?></h1>
-        <section>
-            <h2>Created by <?php echo $res["username_pembuat"] ?></h2>
-            <p>Type: <?php echo $res["jenis"] ?></p>
-            <p>Description: <?php echo $res["deskripsi"]; ?></p>
-            <h3>Registration code: <?php echo $res["kode_pendaftaran"] ?></h3>
-        </section>
-        <?php
-        if ($_SESSION["role"] == "mahasiswa") {
-            echo "<a href='backend/KeluarGrup.php?idgrup=" . $_GET["id"] . "'>Keluar dari Grup</a>";
-        } else if ($res["username_pembuat"] == $_SESSION["user"]) {
+        <h1 class="mt-5 text-center underline m-0"><?php echo $res["nama"] ?></h1>
+        <p class="text-center m-0">Created by <?php echo $res["username_pembuat"] ?> | Type: <?php echo $res["jenis"] ?>
+            | Registration code: <?php echo $res["kode_pendaftaran"] ?></p>
+        <p class="text-center m-0 mt-1">
+            <?php echo "<a href='backend/KeluarGrup.php?idgrup=" . $_GET["id"] . "'>Keluar dari Grup</a>"; ?>
+        </p>
+        <h2 class="text-bold m-0">Description:</h2>
+        <p class="m-0"><?php echo $res["deskripsi"]; ?></p>
+        <?php if ($res["username_pembuat"] == $_SESSION["user"]) {
             echo "<a href='backend/HapusGrup.php?idgrup=" . $_GET["id"] . "'>Bubarkan dan Hapus Grup</a>";
-        }
-        ?>
-        <section>
-            <h2>Daftar Event</h2>
-            <hr>
-            <table>
+        } ?>
+        <hr>
+        <section class="mt-2 mb-2">
+            <h2 class="m-0">Daftar Event</h2>
+            <?php if ($_SESSION['role'] == "dosen") {
+                echo "<a href='CreateEvent.php?idgrup=" . $_GET["id"] . "'>Buat Event</a>";
+            } ?>
+            <table class="mt-1" border="1" cellspacing="0" cellpadding="5">
                 <thead>
                     <tr>
                         <th>Judul</th>
@@ -68,16 +69,12 @@ $res = $group->GetGroupById($_GET['id']);
                 </thead>
                 <tbody id="tbodyEvent"></tbody>
             </table>
-            <?php
-            if ($_SESSION['role'] == "dosen") {
-                echo "<a href='CreateEvent.php?idgrup=" . $_GET["id"] . "'>Buat Event</a>";
-            }
-            ?>
         </section>
-        <section>
-            <h2>Daftar Mahasiswa/Dosen</h2>
-            <hr>
-            <table border="1">
+        <hr>
+        <section class="mt-2 mb-2">
+            <h2 class="m-0">Daftar Mahasiswa/Dosen</h2>
+            <?php if ($_SESSION['role'] == "dosen") { echo '<a href="EditGroup.php?id=' . $_GET['id'] . "&nama=" . $res["nama"] . "&jenis=" . $res["jenis"] . '">Edit group</a>'; } ?>;
+            <table class="mt-1" border="1" cellspacing="0" cellpadding="5">
                 <thead>
                     <tr>
                         <th>NRP/NPK</th>
@@ -93,13 +90,11 @@ $res = $group->GetGroupById($_GET['id']);
         <br>
         <?php
         if ($_SESSION['role'] == "dosen") {
-            echo '<a href="EditGroup.php?id=' . $_GET['id'] . "&nama=" . $res["nama"] . "&jenis=" . $res["jenis"] . '">Edit group</a>';
             echo "<br>";
             echo "<a href='ManageGroup.php'>Back</a>";
         } else if ($_SESSION["role"] == "mahasiswa") {
             echo "<a href='ManageGroupMahasiswa.php'><button>Kembali</button></a>";
-        }
-        ?>
+        } ?>
     </main>
 </body>
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
@@ -164,8 +159,10 @@ $res = $group->GetGroupById($_GET['id']);
 
                 if (isDosen) {
                     button = `
-                        <td><a href='EditEvent.php?idevent=` + e["idevent"] + `&idgrup=` + e["idgrup"] + `'><button>Edit</button></a></td>
-                        <td><button onClick='HapusEvent(` + e["idevent"] + `)'>Hapus</button></td>
+                        <td>    
+                            <a href='EditEvent.php?idevent=` + e["idevent"] + `&idgrup=` + e["idgrup"] + `'><button>Edit</button></a>
+                            <button onClick='HapusEvent(` + e["idevent"] + `)'>Hapus</button>
+                        </td>
                     `;
                 }
 

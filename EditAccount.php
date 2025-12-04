@@ -50,9 +50,10 @@ if (isset($_GET['id']) && isset($_GET['role'])) {
 <html>
 
 <head>
-    <title>Edit Account</title>
+    <title>Admin - Edit Account</title>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <link rel="stylesheet" href="css/pageEditAccount.css">
+    <link rel="stylesheet" href="css/template.css">
 </head>
 
 <body>

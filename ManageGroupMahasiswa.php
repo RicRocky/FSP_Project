@@ -4,8 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Mahasiswa - Daftar Grup</title>
     <link rel="stylesheet" href="css/manage-group-mahasiswa.css">
+    <link rel="stylesheet" href="css/template.css">
 </head>
 
 <body>
@@ -21,7 +22,7 @@
         </section>
         <section>
             <h2>Daftar Group Diikuti</h2>
-            <table border="1">
+            <table border="1" cellspacing="0" cellpadding="5">
                 <thead>
                     <tr>
                         <th>Nama</th>
@@ -36,7 +37,7 @@
         </section>
         <section>
             <h2>Daftar Group Public</h2>
-            <table border="1">
+            <table border="1" cellspacing="0" cellpadding="5">
                 <thead>
                     <tr>
                         <th>Nama</th>

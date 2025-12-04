@@ -82,8 +82,9 @@ while ($row = $resDosens->fetch_assoc()) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Akun</title>
+    <title>Admin - Daftar Akun</title>
     <link rel="stylesheet" href="css/pageManageAccount.css">
+    <link rel="stylesheet" href="css/template.css">
 </head>
 
 <body>
