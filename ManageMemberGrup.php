@@ -93,7 +93,7 @@ while ($row = $resDosens->fetch_assoc()) {
                 <h2 style="margin:0;">Daftar Akun</h2>
                 <div class="flex">
                     <article class="min-w-50vw align-center">
-                        <h3 class="c-judul-table">Akun Mahasiswa</h3>
+                        <h3 class="c-judul-table m-0 mt-2">Akun Mahasiswa</h3>
                         <form action="" method="get" class="c-mb-1">
                             <input type="text"
                                 value="<?php echo isset($_GET['cariMahasiswa']) ? $_GET['cariMahasiswa'] : "" ?>"
@@ -106,7 +106,7 @@ while ($row = $resDosens->fetch_assoc()) {
                             <button>Cari</button>
                         </form>
 
-                        <table border="1" cellspacing="0" cellpadding="5">
+                        <table class="mt-1" border="1" cellspacing="0" cellpadding="5">
                             <thead>
                                 <tr class="c-thead">
                                     <th>NRP</th>
@@ -133,7 +133,7 @@ while ($row = $resDosens->fetch_assoc()) {
                         </div>
                     </article>
                     <article class="min-w-50vw align-center">
-                        <h3 class="c-judul-table">Akun Dosen</h3>
+                        <h3 class="c-judul-table m-0 mt-2">Akun Dosen</h3>
                         <form action="" method="get" class="c-mb-1">
                             <input type="text" value="<?php echo isset($_GET['cariDosen']) ? $_GET['cariDosen'] : "" ?>"
                                 name="cariDosen">
@@ -146,7 +146,7 @@ while ($row = $resDosens->fetch_assoc()) {
                             <button>Cari</button>
                         </form>
 
-                        <table border="1" cellspacing="0" cellpadding="5">
+                        <table class="mt-1" border="1" cellspacing="0" cellpadding="5">
                             <thead>
                                 <tr class="c-thead">
                                     <th>NPK</th>

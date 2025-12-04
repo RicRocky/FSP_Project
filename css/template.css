@@ -86,3 +86,13 @@ body {
 .min-w-50vw{
     min-width: 50vw;
 }
+
+.w-screen{
+    width: 100vw;
+}
+
+
+:root{
+    --kucing: "ikan";
+    --kucing: calc(100vw-10%);
+}
