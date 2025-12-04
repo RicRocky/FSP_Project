@@ -86,6 +86,16 @@ class MemberGroup extends Group
         $res = $stmt->get_result();
 
         if ($row = $res->fetch_assoc()) {
+            $sql = "SELECT * FROM grup WHERE idgrup = ? AND username_pembuat = ?";
+            $stmt = $this->mysqli->prepare($sql);
+            $stmt->bind_param("is", $idgrup, $row["username"]);
+            $stmt->execute();
+            $res = $stmt->get_result();
+
+            if ($row = $res->fetch_assoc()) {
+                return false;
+            }
+
             $username = $row["username"];
 
             $sql = "DELETE FROM member_grup 
@@ -96,6 +106,7 @@ class MemberGroup extends Group
             $stmt->execute();
 
             return true;
+            die();
         } else {
             return false;
         }

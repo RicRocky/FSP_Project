@@ -72,105 +72,112 @@ while ($row = $resDosens->fetch_assoc()) {
 
 <body>
     <main>
-        <h1>Pengaturan Member Grup <?php echo $rowGrup["nama"] ?></h1>
-        <section>
-            <h2>Member Saat Ini</h2>
-            <table border="1" cellspacing="0" cellpadding="5">
-                <thead>
-                    <th>NRP/NPK</th>
-                    <th>Username</th>
-                    <th>Is Lecturer?</th>
-                    <th>Action</th>
-                </thead>
-                <tbody id="tbodyMember">
-                </tbody>
-            </table>
-        </section>
-        <br>
-        <section>
-            <h2 style="margin:0;">Daftar Akun</h2>
-            <article style="float: left; margin:0 1rem 0 1rem;">
-                <h3 class="c-judul-table">Akun Mahasiswa</h3>
-                <form action="" method="get" class="c-mb-1">
-                    <input type="text" value="<?php echo isset($_GET['cariMahasiswa']) ? $_GET['cariMahasiswa'] : "" ?>"
-                        name="cariMahasiswa">
-                    <input type="text" value="<?php echo 1 ?>" name="pageMahasiswa" hidden>
-                    <input type="text" value="<?php echo isset($_GET["cariDosen"]) ? $_GET["cariDosen"] : "" ?>"
-                        name="cariDosen" hidden>
-                    <input type="text" value="<?php echo $hal_ke_dosen ?>" name="pageDosen" hidden>
-                    <input type="text" value="<?php echo $_GET["idgrup"] ?>" name="idgrup" hidden>
-                    <button>Cari</button>
-                </form>
+        <h1 class="text-center">Pengaturan Member Grup <?php echo $rowGrup["nama"] ?></h1>
+        <section class="card">
 
+            <section>
+                <h2>Member Saat Ini</h2>
                 <table border="1" cellspacing="0" cellpadding="5">
                     <thead>
-                        <tr class="c-thead">
-                            <th>NRP</th>
-                            <th>Name</th>
-                            <th>Photo</th>
-                            <th>Action</th>
-                        </tr>
+                        <th>NRP/NPK</th>
+                        <th>Username</th>
+                        <th>Is Lecturer?</th>
+                        <th>Action</th>
                     </thead>
-                    <tbody>
-                        <?php echo $hasilMahasiswa; ?>
+                    <tbody id="tbodyMember">
                     </tbody>
                 </table>
-                <div class="c-mt-2 ">
-                    <?php echo GeneratePageNumberMahasiswa(
-                        $DATA_PER_PAGE,
-                        $jumMahasiswas,
-                        $jumDosens,
-                        isset($_GET["cariMahasiswa"]) ? $_GET["cariMahasiswa"] : "",
-                        $hal_ke_mahasiswa,
-                        isset($_GET["cariDosen"]) ? $_GET["cariDosen"] : "",
-                        $hal_ke_dosen,
-                        $_GET["idgrup"]
-                    ) ?>
-                </div>
-            </article>
-            <article style="float: left; margin-left: 1rem;">
-                <h3 class="c-judul-table">Akun Dosen</h3>
-                <form action="" method="get" class="c-mb-1">
-                    <input type="text" value="<?php echo isset($_GET['cariDosen']) ? $_GET['cariDosen'] : "" ?>"
-                        name="cariDosen">
-                    <input type="text" value="<?php echo $hal_ke_mahasiswa ?>" name="pageMahasiswa" hidden>
-                    <input type="text" value="<?php echo isset($_GET["cariMahasiswa"]) ? $_GET["cariMahasiswa"] : "" ?>"
-                        name="cariMahasiswa" hidden>
-                    <input type="text" value="<?php echo 1 ?>" name="pageDosen" hidden>
-                    <input type="text" value="<?php echo $_GET["idgrup"] ?>" name="idgrup" hidden>
-                    <button>Cari</button>
-                </form>
+            </section>
+            <hr>
+            <section>
+                <h2 style="margin:0;">Daftar Akun</h2>
+                <div class="flex">
+                    <article class="min-w-50vw align-center">
+                        <h3 class="c-judul-table">Akun Mahasiswa</h3>
+                        <form action="" method="get" class="c-mb-1">
+                            <input type="text"
+                                value="<?php echo isset($_GET['cariMahasiswa']) ? $_GET['cariMahasiswa'] : "" ?>"
+                                name="cariMahasiswa">
+                            <input type="text" value="<?php echo 1 ?>" name="pageMahasiswa" hidden>
+                            <input type="text" value="<?php echo isset($_GET["cariDosen"]) ? $_GET["cariDosen"] : "" ?>"
+                                name="cariDosen" hidden>
+                            <input type="text" value="<?php echo $hal_ke_dosen ?>" name="pageDosen" hidden>
+                            <input type="text" value="<?php echo $_GET["idgrup"] ?>" name="idgrup" hidden>
+                            <button>Cari</button>
+                        </form>
 
-                <table border="1" cellspacing="0" cellpadding="5">
-                    <thead>
-                        <tr class="c-thead">
-                            <th>NPK</th>
-                            <th>Name</th>
-                            <th>Photo</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php echo $hasilDosen; ?>
-                    </tbody>
-                </table>
-                <div class="c-mt-2 ">
-                    <?php echo GeneratePageNumberDosen(
-                        $DATA_PER_PAGE,
-                        $jumMahasiswas,
-                        $jumDosens,
-                        isset($_GET["cariMahasiswa"]) ? $_GET["cariMahasiswa"] : "",
-                        $hal_ke_mahasiswa,
-                        isset($_GET["cariDosen"]) ? $_GET["cariDosen"] : "",
-                        $hal_ke_dosen,
-                        $_GET["idgrup"]
-                    ) ?>
+                        <table border="1" cellspacing="0" cellpadding="5">
+                            <thead>
+                                <tr class="c-thead">
+                                    <th>NRP</th>
+                                    <th>Name</th>
+                                    <th>Photo</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php echo $hasilMahasiswa; ?>
+                            </tbody>
+                        </table>
+                        <div class="c-mt-2 ">
+                            <?php echo GeneratePageNumberMahasiswa(
+                                $DATA_PER_PAGE,
+                                $jumMahasiswas,
+                                $jumDosens,
+                                isset($_GET["cariMahasiswa"]) ? $_GET["cariMahasiswa"] : "",
+                                $hal_ke_mahasiswa,
+                                isset($_GET["cariDosen"]) ? $_GET["cariDosen"] : "",
+                                $hal_ke_dosen,
+                                $_GET["idgrup"]
+                            ) ?>
+                        </div>
+                    </article>
+                    <article class="min-w-50vw align-center">
+                        <h3 class="c-judul-table">Akun Dosen</h3>
+                        <form action="" method="get" class="c-mb-1">
+                            <input type="text" value="<?php echo isset($_GET['cariDosen']) ? $_GET['cariDosen'] : "" ?>"
+                                name="cariDosen">
+                            <input type="text" value="<?php echo $hal_ke_mahasiswa ?>" name="pageMahasiswa" hidden>
+                            <input type="text"
+                                value="<?php echo isset($_GET["cariMahasiswa"]) ? $_GET["cariMahasiswa"] : "" ?>"
+                                name="cariMahasiswa" hidden>
+                            <input type="text" value="<?php echo 1 ?>" name="pageDosen" hidden>
+                            <input type="text" value="<?php echo $_GET["idgrup"] ?>" name="idgrup" hidden>
+                            <button>Cari</button>
+                        </form>
+
+                        <table border="1" cellspacing="0" cellpadding="5">
+                            <thead>
+                                <tr class="c-thead">
+                                    <th>NPK</th>
+                                    <th>Name</th>
+                                    <th>Photo</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php echo $hasilDosen; ?>
+                            </tbody>
+                        </table>
+                        <div class="c-mt-2 ">
+                            <?php echo GeneratePageNumberDosen(
+                                $DATA_PER_PAGE,
+                                $jumMahasiswas,
+                                $jumDosens,
+                                isset($_GET["cariMahasiswa"]) ? $_GET["cariMahasiswa"] : "",
+                                $hal_ke_mahasiswa,
+                                isset($_GET["cariDosen"]) ? $_GET["cariDosen"] : "",
+                                $hal_ke_dosen,
+                                $_GET["idgrup"]
+                            ) ?>
+                        </div>
+                    </article>
                 </div>
-            </article>
-            <div style="clear:both;"></div>
-            <br>
-            <br>
-            <a href="DetailGroup.php?id= <?php echo $_GET["idgrup"] ?>"><button>Kembali</button></a>
+                <br>
+                <br>
+                <a href="DetailGroup.php?id= <?php echo $_GET["idgrup"] ?>"><button
+                        class="btn-back">Kembali</button></a>
+            </section>
         </section>
     </main>
 </body>
@@ -183,7 +190,7 @@ while ($row = $resDosens->fetch_assoc()) {
         type: "post",
         data: {
             action: "LoadDataDaftarMahasiswaDosen",
-            idgrup: <?php echo $_GET["idgrup"]?>,
+            idgrup: <?php echo $_GET["idgrup"] ?>,
         },
         dataType: "json",
         async: false,
@@ -202,7 +209,7 @@ while ($row = $resDosens->fetch_assoc()) {
                     nodeTbodyMember.append(`
                         <tr>
                             <td>` + ((d['NRP'] != null) ? d["NRP"] : d["NPK"]) + `</td>
-                            <td>` + ((d["NamaMahasiswa"] != null)? d["NamaMahasiswa"] : d["NamaDosen"]) + `</td>
+                            <td>` + ((d["NamaMahasiswa"] != null) ? d["NamaMahasiswa"] : d["NamaDosen"]) + `</td>
                             <td>` + ((d['NRP'] != null) ? "Tidak" : "Iya") + `</td>
                             <td><button onClick=HapusMember(` + ((d['NRP'] != null) ? d["NRP"] : d["NPK"]) + `)>Hapus</button></td>
                         </tr>
@@ -210,19 +217,19 @@ while ($row = $resDosens->fetch_assoc()) {
                 });
             }
         },
-        error: function(data){
+        error: function (data) {
             console.log(data);
         },
     });
-    
-    function HapusMember(id){
+
+    function HapusMember(id) {
         $.ajax({
             url: "backend/ManageMemberGrupProcess.php",
             type: "post",
             data: {
                 action: "KickMember",
-                idgrup: <?php echo $_GET["idgrup"]?>,
-                nrpOrNpk: id, 
+                idgrup: <?php echo $_GET["idgrup"] ?>,
+                nrpOrNpk: id,
             },
             dataType: "json",
             async: false,
@@ -241,7 +248,7 @@ while ($row = $resDosens->fetch_assoc()) {
                         nodeTbodyMember.append(`
                             <tr>
                                 <td>` + ((d['NRP'] != null) ? d["NRP"] : d["NPK"]) + `</td>
-                                <td>` + ((d["NamaMahasiswa"] != null)? d["NamaMahasiswa"] : d["NamaDosen"]) + `</td>
+                                <td>` + ((d["NamaMahasiswa"] != null) ? d["NamaMahasiswa"] : d["NamaDosen"]) + `</td>
                                 <td>` + ((d['NRP'] != null) ? "Tidak" : "Iya") + `</td>
                                 <td><button onClick=HapusMember(` + ((d['NRP'] != null) ? d["NRP"] : d["NPK"]) + `)>Hapus</button></td>
                             </tr>
@@ -250,21 +257,21 @@ while ($row = $resDosens->fetch_assoc()) {
                 }
                 alert(data["msg"]);
             },
-            error: function(data){
+            error: function (data) {
                 console.log(data);
                 alert(data["msg"]);
             },
         });
     }
-    
-    function TambahMember(username){
+
+    function TambahMember(username) {
         $.ajax({
             url: "backend/ManageMemberGrupProcess.php",
             type: "post",
             data: {
                 action: "TambahMember",
-                idgrup: <?php echo $_GET["idgrup"]?>,
-                username: username, 
+                idgrup: <?php echo $_GET["idgrup"] ?>,
+                username: username,
             },
             dataType: "json",
             async: false,
@@ -283,7 +290,7 @@ while ($row = $resDosens->fetch_assoc()) {
                         nodeTbodyMember.append(`
                             <tr>
                                 <td>` + ((d['NRP'] != null) ? d["NRP"] : d["NPK"]) + `</td>
-                                <td>` + ((d["NamaMahasiswa"] != null)? d["NamaMahasiswa"] : d["NamaDosen"]) + `</td>
+                                <td>` + ((d["NamaMahasiswa"] != null) ? d["NamaMahasiswa"] : d["NamaDosen"]) + `</td>
                                 <td>` + ((d['NRP'] != null) ? "Tidak" : "Iya") + `</td>
                                 <td><button onClick=HapusMember(` + ((d['NRP'] != null) ? d["NRP"] : d["NPK"]) + `)>Hapus</button></td>
                             </tr>
@@ -292,7 +299,7 @@ while ($row = $resDosens->fetch_assoc()) {
                 }
                 alert(data["msg"]);
             },
-            error: function(data){
+            error: function (data) {
                 console.log(data);
             }
         });

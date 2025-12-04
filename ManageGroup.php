@@ -16,7 +16,7 @@ if (!is_numeric($hal_ke_group)) {
 $offset_group = $DATA_PER_PAGE * ($hal_ke_group - 1);       // Start Data group
 
 $group = new Group();
-$res = $group->GetGroup("", $DATA_PER_PAGE, $offset_group);
+$res = $group->GetGroupUser($_SESSION["user"]);
 $jum = $group->getTotalData("");
 
 
@@ -32,31 +32,41 @@ $jum = $group->getTotalData("");
 </head>
 
 <body>
-    <h1>List of All Groups</h1>
-    <a href="CreateGroup.php">Create a new group</a>
-    <table style="border: 1px solid black;">
-        <th>
-            <tr>
-                <td>
-                    Nama
-                </td>
-                <td>
-                    Action
-                </td>
-            </tr>
-        </th>
-        <tbody>
-            <?php
-            foreach ($res as $row) {
-                echo "<tr>";
-                echo "<td>" . $row["nama"] . "</td>";
-                echo "<td><a href='DetailGroup.php?id=" . $row["idgrup"] . "'>Detail</a></td>";
-                echo "</tr>";
-            }
-            ?>
-        </tbody>
-    </table>
-    <a href="Home.php">Back</a>
+    <header>
+        <nav>
+            <a href="Home.php"><button class="btn-back mt-1">Kembali</button></a>
+        </nav>
+    </header>
+    <main>
+        <h1 class="text-center mt-3 underline">List of All Groups</h1>
+        <section class="card mt-5">
+            <table border="1" cellspacing="0" cellpadding="5">
+                <thead>
+                    <tr>
+                        <th>Nama</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    if (count($res) > 0) {
+                        foreach ($res as $row) {
+                            echo "<tr>";
+                            echo "<td>" . $row["nama"] . "</td>";
+                            echo "<td><a href='DetailGroup.php?id=" . $row["idgrup"] . "'>Detail</a></td>";
+                            echo "</tr>";
+                        }
+                    } else {
+                        echo "<tr>";
+                        echo "<td colspan='2' class='text-center'>Anda belum bergabung dengan grup</td>";
+                        echo "</tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
+            <a href="CreateGroup.php">Create a new group</a>
+        </section>
+    </main>
 </body>
 
 </html>

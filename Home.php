@@ -23,7 +23,7 @@ if ($_SESSION['isadmin'] == 1) {
 
 <body>
     <main>
-        <h2>Selamat Datang <span class="c-susername"><?php echo $_SESSION['user'] ?></span>!!</h2>
+        <h2 class="text-center mt-5 underline">Selamat Datang <?php echo $_SESSION['user'] ?>!!</h2>
         <div>
             <div class="c-card">
                 <img src="img/asset/ganti-password.png">

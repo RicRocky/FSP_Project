@@ -8,6 +8,33 @@ class Group extends Connection
         parent::__construct();
     }
 
+    public function GetGroupUser($username){
+        $hasil = [];
+
+        $sql = "SELECT * FROM grup WHERE username_pembuat = ?";
+        $stmt = $this->mysqli->prepare($sql);
+        $stmt->bind_param("s", $username);
+        $stmt->execute();
+        $res = $stmt->get_result();
+
+        while($row = $res->fetch_assoc()){
+            $hasil[] = $row;
+        }
+
+        $sql = "SELECT * FROM member_grup WHERE username = ?";
+        $stmt = $this->mysqli->prepare($sql);
+        $stmt->bind_param("s", $username);
+        $stmt->execute();
+        $res = $stmt->get_result();
+
+        while($row = $res->fetch_assoc()){
+            $hasil[] = $row;
+        }
+        
+        $stmt->close();
+        return $hasil;
+    }
+
     public function GetGroup($keyword_search = "", $limit = 10, $offset = null)
     {
         if (!is_string($keyword_search) || !is_numeric($limit) || is_string($offset)) {

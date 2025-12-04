@@ -35,6 +35,10 @@ body {
     margin-top: 0.5rem !important;
 }
 
+.mb-1 {
+    margin-bottom: 0.5rem !important;
+}
+
 .mb-1\.5 {
     margin-bottom: 0.75rem !important;
 }
@@ -49,4 +53,36 @@ body {
 
 .underline{
     text-decoration: underline;
+}
+
+.btn-back{
+    border-radius: 0.5rem;
+    padding: 0.5rem 2rem 0.5rem 2rem;
+    background-color:whitesmoke;
+}
+
+.min-h-10 {
+    min-height: 5rem;
+}
+
+.card{
+    padding: 1.5rem;
+    background-color: aliceblue;
+    border-radius: 2rem;
+}
+
+.flex{
+    display: flex;
+}
+
+.content-center{
+    justify-content: center;
+}
+
+.align-center{
+    align-items: center;
+}
+
+.min-w-50vw{
+    min-width: 50vw;
 }
