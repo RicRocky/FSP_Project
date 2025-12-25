@@ -24,18 +24,19 @@ class MemberGroup extends Group
         return true;
     }
 
-    public function JoinGroup($username, $idgrup)
+    public function JoinGroup($username, $kodegrup)
     {
         // Cek apakah grup tersebut ada
         $sql = "SELECT * FROM grup WHERE kode_pendaftaran = ?";
         $stmt = $this->mysqli->prepare($sql);
-        $stmt->bind_param("s", $idgrup);
+        $stmt->bind_param("s", $kodegrup);
         $stmt->execute();
         $res = $stmt->get_result();
         if ($res->num_rows == 0) {
             return 0;
         }
 
+        $idgrup = "";
         if ($row = $res->fetch_assoc()) {
             $idgrup = $row["idgrup"];
         }

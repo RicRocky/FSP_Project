@@ -8,7 +8,8 @@ class Group extends Connection
         parent::__construct();
     }
 
-    public function GetGroupUser($username){
+    public function GetGroupUser($username)
+    {
         $hasil = [];
 
         $sql = "SELECT * FROM grup WHERE username_pembuat = ?";
@@ -17,7 +18,7 @@ class Group extends Connection
         $stmt->execute();
         $res = $stmt->get_result();
 
-        while($row = $res->fetch_assoc()){
+        while ($row = $res->fetch_assoc()) {
             $hasil[] = $row;
         }
 
@@ -27,10 +28,10 @@ class Group extends Connection
         $stmt->execute();
         $res = $stmt->get_result();
 
-        while($row = $res->fetch_assoc()){
+        while ($row = $res->fetch_assoc()) {
             $hasil[] = $row;
         }
-        
+
         $stmt->close();
         return $hasil;
     }
@@ -68,31 +69,15 @@ class Group extends Connection
         return $res;
     }
 
-    public function GetGroupPublik($userid = null, $limit = 10, $offset = null)
+    public function GetGroupPublik($userid)
     {
-        if (!is_numeric($limit) || is_string($offset)) {
-            header("Location: ../../ManageGroup.php");
-        }
-
-        $sql = "SELECT * FROM grup g";
-        if (!is_null($userid)) {
-            $sql .= " LEFT JOIN member_grup mg ON g.idgrup = mg.idgrup";
-        }
-
-        $sql .= " WHERE g.jenis LIKE '%Publik%'";
-
-        if (!is_null($userid)) {
-            $sql .= " AND mg.username IS NULL";
-        }
-
-        if (!is_null($offset))
-            $sql .= " LIMIT ?, ?";
-
+        $sql = "SELECT * FROM grup g WHERE g.jenis = 'Publik'";
+        $sql .= " AND NOT EXISTS ( ";
+        $sql .= "   (SELECT mg.idgrup FROM member_grup mg WHERE g.idgrup = mg.idgrup AND mg.username = ?)";
+        $sql .= " )";
+        
         $stmt = $this->mysqli->prepare($sql);
-        if (!is_null($offset)) {
-            $stmt->bind_param("ii", $offset, $limit);
-        }
-
+        $stmt->bind_param("s", $userid);
         $stmt->execute();
         $res = $stmt->get_result();
 
@@ -101,33 +86,20 @@ class Group extends Connection
         return $res;
     }
 
-    public function GetGroupMember($keyword_search = "", $limit = 10, $offset = null)
+    public function GetGroupMember($username = "")
     {
-        if (!is_string($keyword_search) || !is_numeric($limit) || is_string($offset)) {
+        if (!is_string($username)) {
             header("Location: ../../ManageGroupMahasiswa.php");
         }
 
         $sql = "SELECT * FROM grup g INNER JOIN member_grup mg ON g.idgrup = mg.idgrup INNER JOIN akun a ON a.username = mg.username";
-        if ($keyword_search != "") {
-            $sql .= " WHERE (g.nama LIKE ? OR g.idgrup LIKE ? OR g.deskripsi LIKE ? OR mg.username LIKE ?)";
-        }
-
-        if (!is_null($offset)) {
-            $sql .= " LIMIT ?, ?";
-        }
-
+        if ($username != "") $sql .= " WHERE (mg.username LIKE ?)";
+        
         $stmt = $this->mysqli->prepare($sql);
-
-        if (!is_null($offset) && $keyword_search != "") {
-            $keyword_search = "%" . $keyword_search . "%";
-            $stmt->bind_param("ssssii", $keyword_search, $keyword_search, $keyword_search, $keyword_search, $offset, $limit);
-
-        } else if (is_null($offset) && $keyword_search != "") {
-            $keyword_search = "%" . $keyword_search . "%";
-            $stmt->bind_param("ssss", $keyword_search, $keyword_search, $keyword_search, $keyword_search);
-
-        } else if (!is_null($offset) && $keyword_search == "") {
-            $stmt->bind_param("ii", $offset, $limit);
+        
+        if ($username != "") {
+            $username = "%" . $username . "%";
+            $stmt->bind_param("s", $username);
         }
 
         $stmt->execute();
@@ -245,15 +217,16 @@ class Group extends Connection
         $stmt->execute();
     }
 
-    public function CheckUser($idgrup, $username){
+    public function CheckUser($idgrup, $username)
+    {
         $sql = "SELECT * FROM grup g LEFT JOIN member_grup mg ON mg.idgrup = g.idgrup WHERE g.idgrup = ? AND (g.username_pembuat = ? OR mg.username = ? )";
         $stmt = $this->mysqli->prepare($sql);
         $stmt->bind_param("iss", $idgrup, $username, $username);
         $stmt->execute();
         $res = $stmt->get_result();
-        if($res->num_rows > 0){
+        if ($res->num_rows > 0) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }

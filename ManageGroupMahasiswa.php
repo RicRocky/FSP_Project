@@ -59,6 +59,9 @@
     const nodeTBody = $("#bodyTable");
     const nodeTBodyPublic = $("#bodyTablePublic");
 
+    ////////////////////////////////
+    // Munculkan Data Grup Publik //
+    ////////////////////////////////
     $.ajax({
         url: "backend/MahasiswaGroup.php",
         type: "post",
@@ -74,7 +77,14 @@
         },
     })
 
+    $("body").on("click", "#btnBergabung", function () {
+        Bergabung("privat");
+    });
+
     LoadDataGrupPublic();
+    ////////////////////////////////
+    // Munculkan Data Grup Publik //
+    ////////////////////////////////
 
     function LoadDataGrupPublic() {
         $.ajax({
@@ -90,12 +100,12 @@
                 TampilkanDataTableGrupPublic(data["data"]);
                 console.log(data);
             },
+            error: function (data){
+                console.log(data);
+            }
         });
     }
 
-    $("body").on("click", "#btnBergabung", function () {
-        Bergabung($("#kodeGroup").val());
-    });
 
     function KeluarGroup(idgrup) {
         $.ajax({
@@ -164,8 +174,8 @@
                     <td>` + data["tanggal_pembentukan"] + `</td>
                     <td>` + data["jenis"] + `</td>
                     <td> 
-                        Kode Pendaftaran:<input type="text" id="kodePendaftaranGrupPublic">
-                        <button onClick="Bergabung('')">Tambah</button>
+                        Kode Pendaftaran:<input type="text" id="` + data["idgrup"] + `">
+                        <button onClick="Bergabung(` + data["idgrup"] + `)">Tambah</button>
                     </td>
                     </tr>
                 `);
@@ -173,13 +183,21 @@
         }
     }
 
-    function Bergabung(kodeOrIdGrup) {
+    function Bergabung(asal) {
+        kodeGroupInput = "";
+        if (asal != "privat") {
+            asal = "#" + asal;
+            kodeGroupInput = $(asal).val();
+        } else {
+            kodeGroupInput = $("#kodeGroup").val();
+        }
+
         $.ajax({
             url: "backend/MahasiswaGroup.php",
             type: "post",
             data: {
                 action: "TambahGrupMahasiswa",
-                kodeGroup: $("#kodePendaftaranGrupPublic").val(),
+                kodeGroup: kodeGroupInput,
             },
             dataType: "json",
             async: false,

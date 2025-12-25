@@ -91,10 +91,10 @@ function LoadDataGrupMahasiswa()
 function LoadDataGrupPublic(){
     $hasil = [];
     $objGroup = new Group();
-    $res = $objGroup->GetGroupPublik($_SESSION);
+    $res = $objGroup->GetGroupPublik($_SESSION["user"]);
     while ($row = $res->fetch_assoc()) {
         $hasil[] = $row;
     }
     
-    return $hasil;
+    return $hasil;    
 }

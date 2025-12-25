@@ -37,7 +37,9 @@ $res = $group->GetGroupById($_GET['id']);
         <p class="text-center m-0">Created by <?php echo $res["username_pembuat"] ?> | Type: <?php echo $res["jenis"] ?>
             | Registration code: <?php echo $res["kode_pendaftaran"] ?></p>
         <p class="text-center m-0 mt-1">
-            <?php echo "<a href='backend/KeluarGrup.php?idgrup=" . $_GET["id"] . "'>Keluar dari Grup</a>"; ?>
+            <?php 
+            echo "<a href='backend/KeluarGrup.php?idgrup=" . $_GET["id"] . "'>Keluar dari Grup</a>"; 
+            ?>
         </p>
         <section class="card mt-5">
             <h2 class="text-bold m-0">Description:</h2>
