@@ -22,7 +22,9 @@ class Group extends Connection
             $hasil[] = $row;
         }
 
-        $sql = "SELECT * FROM member_grup WHERE username = ?";
+        $sql = "SELECT g.* FROM grup g
+                    INNER JOIN member_grup mg ON g.idgrup = mg.idgrup 
+                    WHERE username = ?";
         $stmt = $this->mysqli->prepare($sql);
         $stmt->bind_param("s", $username);
         $stmt->execute();

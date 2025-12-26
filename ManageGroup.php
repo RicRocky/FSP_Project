@@ -19,7 +19,6 @@ $group = new Group();
 $res = $group->GetGroupUser($_SESSION["user"]);
 $jum = $group->getTotalData("");
 
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
