@@ -49,8 +49,17 @@ class Mahasiswa extends Connection
 
     public function InsertMahasiswa($nrp, $nama, $gender, $tanggal_lahir, $angkatan, $foto_extention)
     {
-        $sqlMahasiswa = "INSERT INTO mahasiswa (nrp, nama, gender, tanggal_lahir, angkatan,
-    foto_extention) VALUES (?, ?, ?, ?, ?, ?)";
+        $sql = "SELECT 1 FROM mahasiswa WHERE nrp = ?";
+        $stmt = $this->mysqli->prepare($sql);
+        $stmt->bind_param("s", $nrp);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        if($res->num_rows > 0){
+            return "nrp sudah ada";
+            die();
+        }
+        
+        $sqlMahasiswa = "INSERT INTO mahasiswa (nrp, nama, gender, tanggal_lahir, angkatan, foto_extention) VALUES (?, ?, ?, ?, ?, ?)";
         $stmt = $this->mysqli->prepare($sqlMahasiswa);
         $stmt->bind_param(
             "ssssss",
@@ -64,7 +73,7 @@ class Mahasiswa extends Connection
         $stmt->execute();
         $stmt->close();
 
-        return true;
+        return "berhasil";
     }
     public function UpdateMahasiswa($nrp, $nama, $gender, $tanggal_lahir, $angkatan, $foto_extention)
     {

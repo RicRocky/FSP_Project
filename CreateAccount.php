@@ -44,6 +44,15 @@ if ($_SESSION['isadmin'] == 0) {
                         case 'invalid_image':
                             echo " The uploaded file is not a valid image!";
                             break;
+                        case 'NPK sudah ada':
+                            echo " NPK tersebut telah digunakan";
+                            break;
+                        case 'username sudah ada':
+                            echo " Username tersebut telah digunakan";
+                            break;
+                        case 'NRP sudah ada':
+                            echo " NRP tersebut telah digunakan";
+                            break;
                         default:
                             echo " An unknown error occurred.";
                     }

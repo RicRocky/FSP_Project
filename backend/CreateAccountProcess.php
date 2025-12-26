@@ -33,14 +33,23 @@ if (isset($_POST['submit'])) {
 
         $dsn = new Dosen();
         $akun = new Akun();
-        $dsn->InsertDosen($npk, $name, $ext);
-        $akun->InsertAkun($username, $password, 0, 0, $npk);
+        $hasilDosen = $dsn->InsertDosen($npk, $name, $ext);
+        if ($hasilDosen == "Npk sudah ada") {
+            header("Location: ../CreateAccount.php?error=NPK sudah ada");
+            die();
+        }
+
+        $hasilAkun = $akun->InsertAkun($username, $password, 0, 0, $npk);
+        if ($hasilAkun == "username sudah ada") {
+            header("Location: ../CreateAccount.php?error=username sudah ada");
+            die();
+        }
 
         $newFileName = $npk . '.' . $ext;
         move_uploaded_file($photoDsn['tmp_name'], __DIR__ . '/../img/' . $newFileName);
 
     } elseif ($role === 'mahasiswa') {
-        $nrp = $_POST['nrp'] ?? '';
+        $nrp = trim($_POST['nrp']) ?? '';
         $name = $_POST['nameMhs'] ?? '';
         $gender = $_POST['gender'] ?? '';
         $birth = $_POST['birth'] ?? '';
@@ -62,13 +71,24 @@ if (isset($_POST['submit'])) {
 
         $mhs = new Mahasiswa();
         $akun = new Akun();
-        $mhs->InsertMahasiswa($nrp, $name, $gender, $birth, $year, $ext);
-        $akun->InsertAkun($username, $password, 0, $nrp, 0);
+        $hasil = $mhs->InsertMahasiswa($nrp, $name, $gender, $birth, $year, $ext);
+        if ($hasil == "nrp sudah ada") {
+            var_dump($hasil);
+            die();
+            header("Location: ../CreateAccount.php?error=NRP sudah ada");
+            die();
+        }
+
+        $hasil = $akun->InsertAkun($username, $password, 0, $nrp, 0);
+        if ($hasil == "username sudah ada") {
+            header("Location: ../CreateAccount.php?error=username sudah ada");
+            die();
+        }
 
         $newFileName = $nrp . '.' . $ext;
         move_uploaded_file($photoMhs['tmp_name'], __DIR__ . '/../img/' . $newFileName);
     }
 
-    header("Location: ../ManageAccount.php");
+    header("Location: ../ManageAccount.php?ms=pindah");
     exit;
 }

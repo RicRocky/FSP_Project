@@ -56,6 +56,16 @@ class Akun extends Connection
 
     public function InsertAkun($username, $password, $isadmin = 0, $nrp = 0, $npk = 0)
     {
+        $sql = "SELECT * FROM akun WHERE username = ?";
+        $stmt = $this->mysqli->prepare($sql);
+        $stmt->bind_param("s", $username);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        if ($res->fetch_assoc()) {
+            return "username sudah ada";
+            die();
+        }
+
         if ($nrp != 0) {
             $sqlAkun = "INSERT INTO akun (username, password, nrp_mahasiswa, isadmin) 
                     VALUES (?, ?, ?, ?)";
@@ -71,7 +81,6 @@ class Akun extends Connection
         }
         $stmt->execute();
         $stmt->close();
-        return true;
     }
 
     public function UpdateAkun($username, $password, $isadmin = 0, $nrp = 0, $npk = 0)
@@ -136,7 +145,7 @@ class Akun extends Connection
     public function ChangePass($username, $passBaru)
     {
         $stmt2 = $this->mysqli->prepare("UPDATE akun SET password = ? WHERE username = ?");
-        $pass = password_hash($passBaru , PASSWORD_DEFAULT);
+        $pass = password_hash($passBaru, PASSWORD_DEFAULT);
         $stmt2->bind_param("ss", $pass, $username);
         $stmt2->execute();
         $res2 = $stmt2->get_result();

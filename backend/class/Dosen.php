@@ -51,6 +51,16 @@ class Dosen extends Connection
 
     public function InsertDosen($npk, $nama, $foto_extension)
     {
+        $sql = "SELECT * FROM dosen WHERE npk = ?";
+        $stmt = $this->mysqli->prepare($sql);
+        $stmt->bind_param("s", $npk);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        if($res->fetch_assoc()){
+            return "Npk sudah ada"; 
+            die();
+        }
+
         $sqlDosen = "INSERT INTO dosen (npk, nama, foto_extension) VALUES (?, ?, ?)";
         $stmt = $this->mysqli->prepare($sqlDosen);
         $stmt->bind_param("sss", $npk, $nama, $foto_extension);
