@@ -74,7 +74,6 @@ while ($row = $resDosens->fetch_assoc()) {
     <main>
         <h1 class="text-center">Pengaturan Member Grup <?php echo $rowGrup["nama"] ?></h1>
         <section class="card">
-
             <section>
                 <h2>Member Saat Ini</h2>
                 <table border="1" cellspacing="0" cellpadding="5">
@@ -223,6 +222,7 @@ while ($row = $resDosens->fetch_assoc()) {
     });
 
     function HapusMember(id) {
+        console.log(id);
         $.ajax({
             url: "backend/ManageMemberGrupProcess.php",
             type: "post",
@@ -259,7 +259,6 @@ while ($row = $resDosens->fetch_assoc()) {
             },
             error: function (data) {
                 console.log(data);
-                alert(data["msg"]);
             },
         });
     }

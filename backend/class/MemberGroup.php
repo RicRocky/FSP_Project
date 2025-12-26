@@ -80,36 +80,27 @@ class MemberGroup extends Group
 
     public function KickMember($nrpOrNpk, $idgrup)
     {
-        $sql = "SELECT username FROM akun WHERE nrp_mahasiswa = ? OR npk_dosen = ?";
+        $sql = "SELECT a.username FROM grup g 
+                    INNER JOIN member_grup mg ON g.idgrup = mg.idgrup
+                    INNER JOIN akun a ON a.username = mg.username
+                    WHERE g.idgrup = ? AND (nrp_mahasiswa = ? OR npk_dosen = ?)";
         $stmt = $this->mysqli->prepare($sql);
-        $stmt->bind_param("ss", $nrpOrNpk, $nrpOrNpk);
+        $stmt->bind_param("iss", $idgrup, $nrpOrNpk, $nrpOrNpk);
         $stmt->execute();
         $res = $stmt->get_result();
 
         if ($row = $res->fetch_assoc()) {
-            $sql = "SELECT * FROM grup WHERE idgrup = ? AND username_pembuat = ?";
-            $stmt = $this->mysqli->prepare($sql);
-            $stmt->bind_param("is", $idgrup, $row["username"]);
-            $stmt->execute();
-            $res = $stmt->get_result();
-
-            if ($row = $res->fetch_assoc()) {
-                return false;
-            }
-
             $username = $row["username"];
-
-            $sql = "DELETE FROM member_grup 
-                WHERE username = ? AND idgrup = ?";
+            $sql = "DELETE FROM member_grup WHERE username = ? AND idgrup = ?";
 
             $stmt = $this->mysqli->prepare($sql);
             $stmt->bind_param("si", $username, $idgrup);
             $stmt->execute();
 
             return true;
-            die();
         } else {
             return false;
         }
+
     }
 }
