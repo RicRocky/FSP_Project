@@ -56,6 +56,11 @@ $res = $group->GetGroupById($_GET['id']);
             } ?>
             <hr>
             <section class="mt-2 mb-2">
+                <h2 class="m-0">Lihat Daftar Thread</h2>
+                <a href="ManageThread.php?idgrup=<?= $_GET['id'] ?>">Manage Thread</a>
+            </section>
+            <hr>
+            <section class="mt-2 mb-2">
                 <h2 class="m-0">Daftar Event</h2>
                 <?php if ($_SESSION['role'] == "dosen") {
                     echo "<a href='CreateEvent.php?idgrup=" . $_GET["id"] . "'>Buat Event</a>";
