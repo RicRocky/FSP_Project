@@ -134,6 +134,7 @@ body {
 }
 
 .container-isi-chat{
+    margin-bottom: 1rem;
     min-height: 60vh;
 }
 

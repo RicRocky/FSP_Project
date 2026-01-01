@@ -61,8 +61,8 @@ $idgrup = $resgrup["idgrup"];
                     </div>
                 </div>
                 <div class="tengah">
-                    <input type="text" class="input-pesan">
-                    <button class="btn">Kirim</button>
+                    <input type="text" class="input-pesan" id="pesan">
+                    <button class="btn" id="btnKirim" onClick="Kirim()">Kirim</button>
                 </div>
             </div>
         </section>
@@ -118,19 +118,11 @@ $idgrup = $resgrup["idgrup"];
                     alert(data["msg"]);
                     return;
                 }
-                console.log(data["data"].length);
-                console.log(dataChat.length);
-                console.log(1);
                 if (data["data"].length != dataChat.length){
-                    console.log(2);
                     for (let i = dataChat.length; i < data["data"].length; i++){
-                        console.log(3);
                         dataChat.push(data["data"][i]);
                         TampilkanChatBaru(data["data"][i]);
                     }
-                    console.log(4);
-                    
-                    console.log(5);
                 }
             },
         });
@@ -139,11 +131,11 @@ $idgrup = $resgrup["idgrup"];
     function TampilkanChat(datas) {
         nodeTempatChat.html("");
         if (datas.length == 0) {
-            nodeTempatChat.append(`
-                <tr>
-                <td colspan="4" style="text-align: center;">Belum Bergabung Dengan Grup.</td>
-                </tr>
-            `)
+            // nodeTempatChat.append(`
+            //     <tr>
+            //     <td colspan="4" style="text-align: center;">Belum Bergabung Dengan Grup.</td>
+            //     </tr>
+            // `)
         } else {
             datas.forEach(function(data) {
                 let namaUser = "";
@@ -177,44 +169,63 @@ $idgrup = $resgrup["idgrup"];
         }
     }
 
-    function TampilkanChatBaru(datas) {
-        if (datas.length == 0) {
-            nodeTempatChat.append(`
-                <tr>
-                <td colspan="4" style="text-align: center;">Belum Bergabung Dengan Grup.</td>
-                </tr>
-            `)
+    function TampilkanChatBaru(data) {
+        if (data.length == 0) {
+            // nodeTempatChat.append(`
+            //     <tr>
+            //     <td colspan="4" style="text-align: center;">Belum Bergabung Dengan Grup.</td>
+            //     </tr>
+            // `)
         } else {
-            datas.forEach(function(data) {
-                let namaUser = "";
-                if (data["namaMahasiswa"] != null){
-                    namaUser = data["namaMahasiswa"];  
-                }else{
-                    namaUser = data["namaDosen"];
-                }
+            let namaUser = "";
+            if (data.namaMahasiswa != null){
+                namaUser = data.namaMahasiswa;  
+            }else{
+                namaUser = data.namaDosen;
+            }
 
-                if (data["username"] == username) {
-                    nodeTempatChat.append(`
-                        <div class="kanan">
-                            <p class="m-0 pr-1">` + namaUser + `</p>
-                            <div class="your-chat">
-                            <p>` + data["isi"] + `</p>
-                            </div>
-                            </div>
-                            `);
-                } else {
-
-                    nodeTempatChat.append(`
-                        <div>
-                            <p class="m-0 pr-1">` + namaUser + `</p>
-                            <div class="other-chat">
-                                <p>` + data["isi"] + `</p>
-                            </div>
+            if (data.username == username) {
+                nodeTempatChat.append(`
+                    <div class="kanan">
+                        <p class="m-0 pr-1">` + namaUser + `</p>
+                        <div class="your-chat">
+                        <p>` + data.isi + `</p>
                         </div>
-                    `)
-                }
-            });
+                        </div>
+                        `);
+            } else {
+
+                nodeTempatChat.append(`
+                    <div>
+                        <p class="m-0 pr-1">` + namaUser + `</p>
+                        <div class="other-chat">
+                            <p>` + data.isi + `</p>
+                        </div>
+                    </div>
+                `)
+            }
         }
+    }
+
+    function Kirim(){
+        let pesanBaru = $("#pesan").val();
+        console.log(pesanBaru);
+        $.ajax({
+            url: "backend/ChatProcess.php",
+            type: "post",
+            data: {
+                action: "KirimPesan",
+                idThread: <?php echo $_GET["id"]; ?>,
+                pesan: pesanBaru,
+            },
+            dataType: "json",
+            async: false,
+            cache: false,
+            success: function (data) {
+                console.log(data);
+                alert(data["msg"]);
+            },
+        });
     }
 </script>
 

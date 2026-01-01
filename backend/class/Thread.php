@@ -132,4 +132,36 @@ class Thread extends Group {
 
         return $data;
     }
+
+    function KirimPesan($idThread, $username, $pesan){
+        $owner = false;
+        $sql = "SELECT 1 FROM thread t WHERE t.username_pembuat = ? AND t.idthread = ?";
+        $stmt = $this->mysqli->prepare($sql);
+        $stmt->bind_param("si", $username, $idThread);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        if($res->fetch_assoc()){
+            $owner = true;
+        }
+        
+        if(!$owner){
+            $sql = "SELECT 1 FROM thread t
+                        INNER JOIN grup g ON t.idgrup = g.idgrup
+                        INNER JOIN member_grup mg ON mg.idgrup = g.idgrup
+                        WHERE mg.username = ? AND t.idthread = ?";
+            $stmt = $this->mysqli->prepare($sql);
+            $stmt->bind_param("si", $username, $idThread);
+            $stmt->execute();
+            $res = $stmt->get_result();
+            if(!$res->fetch_assoc()){
+                return 0;
+            }
+        }
+
+        $sql = "INSERT INTO chat(idthread, username_pembuat, isi, tanggal_pembuatan) VALUES (?, ?, ?, NOW())";
+        $stmt = $this->mysqli->prepare($sql);
+        $stmt->bind_param("iss", $idThread, $username, $pesan);
+        $stmt->execute();
+        return 1;
+    }
 }
