@@ -19,7 +19,6 @@ if (!isset($_GET['id']) || $_GET['id'] == "" && $_SESSION["role"] == "dosen") {
 $group = new Group();
 $res = $group->GetGroupById($_GET['id']);
 
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,10 +32,18 @@ $res = $group->GetGroupById($_GET['id']);
 
 <body>
     <main>
-        <h1 class="mt-5 text-center underline m-0"><?php echo $res["nama"] ?></h1>
+        <?php
+        if ($_SESSION['role'] == "dosen") {
+            echo "<br>";
+            echo "<a href='ManageGroup.php'><button class='btn-back'>Back</button></a>";
+        } else if ($_SESSION["role"] == "mahasiswa") {
+            echo "<br>";
+            echo "<a href='ManageGroupMahasiswa.php'><button class='btn-back'>Kembali</button></a>";
+        } ?>
+        <h1 class="text-center underline m-0"><?php echo $res["nama"] ?></h1>
         <p class="text-center m-0">
             Created by <?php echo $res["username_pembuat"] ?> |
-            Type: <?php echo $res["jenis"] ?>|
+            Type: <?php echo $res["jenis"] ?> |
             Registration code: <?php echo $res["kode_pendaftaran"] ?>
         </p>
         <p class="text-center m-0 mt-1">
@@ -111,14 +118,6 @@ $res = $group->GetGroupById($_GET['id']);
                 }
                 ?>
             </section>
-            <?php
-            if ($_SESSION['role'] == "dosen") {
-                echo "<br>";
-                echo "<a href='ManageGroup.php'><button class='btn-back'>Back</button></a>";
-            } else if ($_SESSION["role"] == "mahasiswa") {
-                echo "<br>";
-                echo "<a href='ManageGroupMahasiswa.php'><button class='btn-back'>Kembali</button></a>";
-            } ?>
         </section>
     </main>
 </body>
@@ -212,7 +211,7 @@ $res = $group->GetGroupById($_GET['id']);
         if (datas.length <= 0) {
             nodeTbodyDaftarMember.append("<td colspan='3' style='text-align:center;'>Belum ada Member</td>");
         } else {
-            datas.forEach(e => {
+            datas.forEach(function(e) {
                 if (e["NRP"] != null) {
                     nodeTbodyDaftarMember.append(`
                             <tr>

@@ -47,52 +47,134 @@ body {
     margin-bottom: 1rem !important;
 }
 
+
 .m-0 {
     margin: 0;
 }
 
-.underline{
+.p-2 {
+    padding: 1rem;
+}
+
+.pl-1{
+    padding-left: 0.5rem;
+}
+
+.pr-1{
+    padding-right: 0.5rem;
+}
+
+.underline {
     text-decoration: underline;
 }
 
-.btn-back{
+.btn{
+    border-radius: 0.5rem;
+    padding: 0.3rem 1rem 0.3rem 1rem;
+    background-color: whitesmoke;
+}
+
+.btn-back {
     border-radius: 0.5rem;
     padding: 0.5rem 2rem 0.5rem 2rem;
-    background-color:whitesmoke;
+    background-color: whitesmoke;
 }
 
 .min-h-10 {
     min-height: 5rem;
 }
 
-.card{
+.card {
     padding: 1.5rem;
     background-color: aliceblue;
     border-radius: 2rem;
 }
 
-.flex{
+.card-kecil {
+    min-width: 60vw;
+
+    padding: 1.5rem;
+    background-color: aliceblue;
+    border-radius: 2rem;
+}
+
+.tengah{
     display: flex;
-}
-
-.content-center{
     justify-content: center;
-}
-
-.align-center{
     align-items: center;
 }
 
-.min-w-50vw{
+.flex {
+    display: flex;
+}
+
+.content-center {
+    justify-content: center;
+}
+
+.align-center {
+    align-items: center;
+}
+
+.min-w-50vw {
     min-width: 50vw;
 }
 
-.w-screen{
+.w-screen {
     width: 100vw;
 }
 
 
-:root{
-    --kucing: "ikan";
-    --kucing: calc(100vw-10%);
+.w-full {
+    width: 100%;
+}
+
+.h-50vh {
+    height: 50vh;
+}
+
+.container-isi-chat{
+    min-height: 60vh;
+}
+
+.other-chat {
+    padding: 1rem 2rem;
+    border-radius: 1rem;
+    background-color: #2F2F2F;
+    max-width: 70%;
+    width: fit-content;
+}
+
+.other-chat p{
+    margin: 0px;
+    color: white;
+}
+
+.your-chat {
+    padding: 1rem 2rem;
+    border-radius: 1rem;
+    background-color: green;
+    max-width: 70%;
+    width: fit-content;
+}
+
+.your-chat p{
+    margin: 0px;
+    color: white;
+}
+
+.kanan{
+    display: flex;
+    align-items: end;
+    flex-direction: column;
+}
+
+.input-pesan{
+    max-width: 90%;
+    width: 100%;
+    margin-right: 1rem;
+}
+
+.text-right{
+    text-align: right;
 }

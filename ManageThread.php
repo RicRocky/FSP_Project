@@ -44,7 +44,7 @@ $jum = $Thread->getTotalData("");
 <body>
     <header>
         <nav>
-            <a href="Home.php"><button class="btn-back mt-1">Kembali</button></a>
+            <a href="DetailGroup.php?id=<?php echo $_GET["idgrup"]; ?>"><button class="btn-back mt-1">Kembali</button></a>
         </nav>
     </header>
     <main>

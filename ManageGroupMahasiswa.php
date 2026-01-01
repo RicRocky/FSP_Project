@@ -141,7 +141,7 @@
             </tr>
             `)
         } else {
-            datas.forEach(data => {
+            datas.forEach(function(data) {
                 nodeTBody.append(`
                     <tr>
                         <td>` + data["nama"] + `</td>
@@ -167,7 +167,7 @@
                     </tr>
                 `)
         } else {
-            datas.forEach(data => {
+            datas.forEach(function(data) {
                 nodeTBodyPublic.append(`
                     <tr>
                     <td>` + data["nama"] + `</td>

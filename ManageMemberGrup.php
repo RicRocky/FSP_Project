@@ -204,7 +204,7 @@ while ($row = $resDosens->fetch_assoc()) {
                         </tr>
                     `)
             } else {
-                data["data"].forEach(d => {
+                data["data"].forEach(function(d) {
                     nodeTbodyMember.append(`
                         <tr>
                             <td>` + ((d['NRP'] != null) ? d["NRP"] : d["NPK"]) + `</td>
@@ -244,7 +244,7 @@ while ($row = $resDosens->fetch_assoc()) {
                             </tr>
                         `)
                 } else {
-                    data["data"].forEach(d => {
+                    data["data"].forEach(function(d) {
                         nodeTbodyMember.append(`
                             <tr>
                                 <td>` + ((d['NRP'] != null) ? d["NRP"] : d["NPK"]) + `</td>
@@ -285,7 +285,7 @@ while ($row = $resDosens->fetch_assoc()) {
                             </tr>
                         `)
                 } else {
-                    data["data"].forEach(d => {
+                    data["data"].forEach(function(d) {
                         nodeTbodyMember.append(`
                             <tr>
                                 <td>` + ((d['NRP'] != null) ? d["NRP"] : d["NPK"]) + `</td>
