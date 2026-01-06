@@ -1,3 +1,10 @@
+<?php
+session_start();
+
+if ($_SESSION['isadmin'] == 1) {
+    header("Location: ManageAccount.php");
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -100,7 +107,7 @@
                 TampilkanDataTableGrupPublic(data["data"]);
                 console.log(data);
             },
-            error: function (data){
+            error: function (data) {
                 console.log(data);
             }
         });
@@ -141,7 +148,7 @@
             </tr>
             `)
         } else {
-            datas.forEach(function(data) {
+            datas.forEach(function (data) {
                 nodeTBody.append(`
                     <tr>
                         <td>` + data["nama"] + `</td>
@@ -167,7 +174,7 @@
                     </tr>
                 `)
         } else {
-            datas.forEach(function(data) {
+            datas.forEach(function (data) {
                 nodeTBodyPublic.append(`
                     <tr>
                     <td>` + data["nama"] + `</td>

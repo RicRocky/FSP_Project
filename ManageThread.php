@@ -8,8 +8,19 @@ if (!isset($_SESSION['user'])) {
     header("Location: Login.php");
 }
 
+if ($_SESSION['isadmin'] == 1) {
+    header("Location: ManageAccount.php");
+}
+
 if (!isset($_GET['idgrup']) || $_GET['idgrup'] == "") {
     header("Location: ManageGroup.php");
+}
+
+// Mengecek apakah user saat ini member dari grup 
+$group = new Group();
+$res = $group->CheckUser($_GET['idgrup'],$_SESSION["user"]);
+if (!$res) {
+    header("Location: Home.php");
 }
 
 $DATA_PER_PAGE = 7;
@@ -82,5 +93,4 @@ $jum = $Thread->getTotalData("");
         </section>
     </main>
 </body>
-
 </html>

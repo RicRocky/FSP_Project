@@ -1,5 +1,14 @@
 <?php
 session_start();
+if ($_SESSION['role'] == "mahasiswa") {
+    header("Location: Home.php");
+    die();
+}
+
+if ($_SESSION['isadmin'] == 1) {
+    header("Location: ManageAccount.php");
+}
+
 if (!isset($_SESSION['user'])) {
     $domain = $_SERVER['HTTP_HOST'];
     $path = $_SERVER['SCRIPT_NAME'];
@@ -9,12 +18,6 @@ if (!isset($_SESSION['user'])) {
     header("Location: login.php?url=" . $url);
     die();
 }
-
-if ($_SESSION['role'] == "mahasiswa") {
-    header("Location: Home.php");
-    die();
-}
-
 ?>
 
 <!DOCTYPE html>

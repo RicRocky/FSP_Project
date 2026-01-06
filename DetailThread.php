@@ -2,16 +2,26 @@
 require_once "backend/class/Group.php";
 require_once "backend/class/Thread.php";
 require_once "backend/class/Event.php";
-session_start();
 
+session_start();
 if (!isset($_SESSION['user'])) {
     header("Location: login.php");
     die();
 }
 
+if ($_SESSION['isadmin'] == 1) {
+    header("Location: ManageAccount.php");
+}
+
 if (!isset($_GET['id']) || $_GET['id'] == "") {
     header("Location: ManageGroup.php");
     die();
+}
+
+$group = new Group();
+$res = $group->CheckUserDariIDThread($_GET['id'], $_SESSION["user"]);
+if (!$res) {
+    header("Location: Home.php");
 }
 
 $id = $_GET['id'];
@@ -44,26 +54,19 @@ $idgrup = $resgrup["idgrup"];
             Status: <?php echo $res["status"] ?> |
             Created at: <?php echo $res["tanggal_pembuatan"] ?>
         </p>
-        <section class=" tengah">
+        <section class="tengah">
             <div class="card card-kecil mt-5">
-                <div class="container-isi-chat" id="tempatChat">
-                    <div>
-                        <p class="m-0 pl-1">Kucing</p>
-                        <div class="other-chat">
-                            <p>pesan</p>
+                <div class="container-isi-chat" id="tempatChat"></div>
+                <?php
+                if ($res["status"] == "Open") {
+                    echo '
+                        <div class="tengah">
+                            <input type="text" class="input-pesan" id="pesan">
+                            <button class="btn" id="btnKirim" onClick="Kirim()">Kirim</button>
                         </div>
-                    </div>
-                    <div class="kanan text-right">
-                        <p class="m-0 pr-1">Aileen</p>
-                        <div class="your-chat">
-                            <p>pesan</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="tengah">
-                    <input type="text" class="input-pesan" id="pesan">
-                    <button class="btn" id="btnKirim" onClick="Kirim()">Kirim</button>
-                </div>
+                    ';
+                }
+                ?>
             </div>
         </section>
         <section>
@@ -81,27 +84,27 @@ $idgrup = $resgrup["idgrup"];
     let dataChat = [];
 
     $.ajax({
-            url: "backend/ChatProcess.php",
-            type: "post",
-            data: {
-                action: "LoadDataChat",
-                idThread: <?php echo $_GET["id"]; ?>,
-            },
-            dataType: "json",
-            async: false,
-            cache: false,
-            success: function (data) {
-                console.log(data);
-                if (data["status"] == "Error") {
-                    alert(data["msg"]);
-                    return;
-                }
-                dataChat = data["data"];
-                TampilkanChat(dataChat);
-            },
-        });
+        url: "backend/ChatProcess.php",
+        type: "post",
+        data: {
+            action: "LoadDataChat",
+            idThread: <?php echo $_GET["id"]; ?>,
+        },
+        dataType: "json",
+        async: false,
+        cache: false,
+        success: function (data) {
+            console.log(data);
+            if (data["status"] == "Error") {
+                alert(data["msg"]);
+                return;
+            }
+            dataChat = data["data"];
+            TampilkanChat(dataChat);
+        },
+    });
 
-    setInterval(function() {
+    setInterval(function () {
         $.ajax({
             url: "backend/ChatProcess.php",
             type: "post",
@@ -118,8 +121,8 @@ $idgrup = $resgrup["idgrup"];
                     alert(data["msg"]);
                     return;
                 }
-                if (data["data"].length != dataChat.length){
-                    for (let i = dataChat.length; i < data["data"].length; i++){
+                if (data["data"].length != dataChat.length) {
+                    for (let i = dataChat.length; i < data["data"].length; i++) {
                         dataChat.push(data["data"][i]);
                         TampilkanChatBaru(data["data"][i]);
                     }
@@ -137,11 +140,11 @@ $idgrup = $resgrup["idgrup"];
             //     </tr>
             // `)
         } else {
-            datas.forEach(function(data) {
+            datas.forEach(function (data) {
                 let namaUser = "";
-                if (data["namaMahasiswa"] != null){
-                    namaUser = data["namaMahasiswa"];  
-                }else{
+                if (data["namaMahasiswa"] != null) {
+                    namaUser = data["namaMahasiswa"];
+                } else {
                     namaUser = data["namaDosen"];
                 }
 
@@ -178,9 +181,9 @@ $idgrup = $resgrup["idgrup"];
             // `)
         } else {
             let namaUser = "";
-            if (data.namaMahasiswa != null){
-                namaUser = data.namaMahasiswa;  
-            }else{
+            if (data.namaMahasiswa != null) {
+                namaUser = data.namaMahasiswa;
+            } else {
                 namaUser = data.namaDosen;
             }
 
@@ -207,7 +210,7 @@ $idgrup = $resgrup["idgrup"];
         }
     }
 
-    function Kirim(){
+    function Kirim() {
         let pesanBaru = $("#pesan").val();
         console.log(pesanBaru);
         $.ajax({

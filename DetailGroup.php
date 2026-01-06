@@ -8,16 +8,28 @@ if (!isset($_SESSION['user'])) {
     die();
 }
 
-if (!isset($_GET['id']) || $_GET['id'] == "" && $_SESSION["role"] == "dosen") {
+
+if ($_SESSION['isadmin'] == 1) {
+    header("Location: ManageAccount.php");
+}
+
+if (!isset($_GET['id']) || (int) $_GET['id'] == "" && $_SESSION["role"] == "dosen") {
     header("Location: ManageGroup.php");
     die();
-} else if (!isset($_GET['id']) || $_GET['id'] == "" && $_SESSION["role"] == "mahasiswa") {
+} else if (!isset($_GET['id']) || (int) $_GET['id'] == "" && $_SESSION["role"] == "mahasiswa") {
     header("Location: ManageGroupMahasiswa.php");
     die();
 }
 
 $group = new Group();
-$res = $group->GetGroupById($_GET['id']);
+
+// Mengecek apakah user saat ini member dari grup 
+$hasil = $group->CheckUser((int) $_GET['id'], $_SESSION["user"]);
+if (!$hasil) {
+    header("Location: Home.php");
+}
+
+$res = $group->GetGroupById((int) $_GET['id']);
 
 ?>
 <!DOCTYPE html>
@@ -61,10 +73,14 @@ $res = $group->GetGroupById($_GET['id']);
             <?php if ($res["username_pembuat"] == $_SESSION["user"]) {
                 echo "<a href='backend/HapusGrup.php?idgrup=" . $_GET["id"] . "'>Bubarkan dan Hapus Grup</a>";
             } ?>
+            <br>
+            <?php if ($_SESSION['role'] == "dosen") {
+                echo '<a href="EditGroup.php?id=' . (int) $_GET['id'] . "&nama=" . $res["nama"] . "&jenis=" . $res["jenis"] . '">Edit group</a>';
+            } ?>
             <hr>
             <section class="mt-2 mb-2">
                 <h2 class="m-0">Lihat Daftar Thread</h2>
-                <a href="ManageThread.php?idgrup=<?= $_GET['id'] ?>">Manage Thread</a>
+                <a href="ManageThread.php?idgrup=<?= (int) $_GET['id'] ?>">Manage Thread</a>
             </section>
             <hr>
             <section class="mt-2 mb-2">
@@ -93,30 +109,43 @@ $res = $group->GetGroupById($_GET['id']);
                 </table>
             </section>
             <hr>
-            <section class="mt-2 mb-2">
-                <h2 class="m-0">Daftar Mahasiswa/Dosen</h2>
-                <?php if ($_SESSION['role'] == "dosen") {
-                    echo '<a href="EditGroup.php?id=' . $_GET['id'] . "&nama=" . $res["nama"] . "&jenis=" . $res["jenis"] . '">Edit group</a>';
-                } ?>;
-                <table class="mt-1" border="1" cellspacing="0" cellpadding="5">
-                    <thead>
-                        <tr>
-                            <th>NRP/NPK</th>
-                            <th>Nama</th>
-                            <th>Role</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tbodyDaftarMember"></tbody>
-                </table>
-            </section>
-            <hr>
             <section>
                 <?php
                 if ($_SESSION["user"] == $res["username_pembuat"]) {
-                    echo "<h2>Pengaturan Member grup</h2>";
+                    echo "<h2 class='m-0'>Pengaturan Member grup</h2>";
                     echo "<a href='ManageMemberGrup.php?idgrup=" . $_GET["id"] . "'>Mengatur Member Grup</a>";
+                } else {
+                    echo "<h2>Member grup</h2>";
                 }
                 ?>
+                <div class="tableMember">
+                    <div>
+                        <h4 class="m-0">Daftar Mahasiswa</h4>
+                        <table class="mt-1" border="1" cellspacing="0" cellpadding="5">
+                            <thead>
+                                <tr>
+                                    <th>NRP</th>
+                                    <th>Nama</th>
+                                    <th>Role</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbodyDaftarMember"></tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <h4 class="m-0">Daftar Dosen</h4>
+                        <table class="mt-1" border="1" cellspacing="0" cellpadding="5">
+                            <thead>
+                                <tr>
+                                    <th>NPK</th>
+                                    <th>Nama</th>
+                                    <th>Role</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbodyDaftarMemberDosen"></tbody>
+                        </table>
+                    </div>
+                </div>
             </section>
         </section>
     </main>
@@ -124,8 +153,10 @@ $res = $group->GetGroupById($_GET['id']);
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
     crossorigin="anonymous"></script>
 <script>
+    console.log(<?php echo $hasil; ?>)
     const nodeTbodyEvent = $("#tbodyEvent");
     const nodeTbodyDaftarMember = $("#tbodyDaftarMember");
+    const nodeTbodyDaftarMemberDosen = $("#tbodyDaftarMemberDosen");
     const isDosen = <?php echo ($_SESSION["role"] == "dosen" ? "true" : "false"); ?>;
 
     $.ajax({
@@ -133,7 +164,7 @@ $res = $group->GetGroupById($_GET['id']);
         type: "post",
         data: {
             action: "LoadDataEvent",
-            idgrup: <?php echo $_GET["id"] ?>,
+            idgrup: <?php echo (int) $_GET["id"] ?>,
         },
         dataType: "json",
         async: false,
@@ -152,7 +183,7 @@ $res = $group->GetGroupById($_GET['id']);
         type: "post",
         data: {
             action: "LoadDataDaftarMahasiswaDosen",
-            idgrup: <?php echo $_GET["id"] ?>
+            idgrup: <?php echo (int) $_GET["id"] ?>
         },
         dataType: "json",
         async: false,
@@ -211,7 +242,7 @@ $res = $group->GetGroupById($_GET['id']);
         if (datas.length <= 0) {
             nodeTbodyDaftarMember.append("<td colspan='3' style='text-align:center;'>Belum ada Member</td>");
         } else {
-            datas.forEach(function(e) {
+            datas.forEach(function (e) {
                 if (e["NRP"] != null) {
                     nodeTbodyDaftarMember.append(`
                             <tr>
@@ -221,7 +252,7 @@ $res = $group->GetGroupById($_GET['id']);
                             </tr>
                         `);
                 } else {
-                    nodeTbodyDaftarMember.append(`
+                    nodeTbodyDaftarMemberDosen.append(`
                             <tr>
                                 <td>` + e["NPK"] + `</td>
                                 <td>` + e["NamaDosen"] + `</td>
@@ -242,7 +273,7 @@ $res = $group->GetGroupById($_GET['id']);
             data: {
                 action: "HapusEvent",
                 idevent: idevent,
-                idgrup: <?php echo $_GET["id"] ?>
+                idgrup: <?php echo (int) $_GET["id"] ?>
             },
             dataType: "json",
             async: false,

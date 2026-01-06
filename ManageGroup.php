@@ -7,6 +7,10 @@ if (!isset($_SESSION['user'])) {
     header("Location: Login.php");
 }
 
+if ($_SESSION['isadmin'] == 1) {
+    header("Location: ManageAccount.php");
+}
+
 $DATA_PER_PAGE = 7;
 
 $hal_ke_group = isset($_GET['pageGroup']) ? $_GET['pageGroup'] : 1;     // Halaman group saat ini

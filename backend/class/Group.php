@@ -232,4 +232,21 @@ class Group extends Connection
             return false;
         }
     }
+
+    public function CheckUserDariIDThread($idgrup, $username)
+    {
+        $sql = "SELECT * FROM grup g 
+                    LEFT JOIN member_grup mg ON mg.idgrup = g.idgrup 
+                    INNER JOIN thread t ON t.idgrup = g.idgrup
+                    WHERE t.idthread = ? AND (g.username_pembuat = ? OR mg.username = ?)";
+        $stmt = $this->mysqli->prepare($sql);
+        $stmt->bind_param("iss", $idgrup, $username, $username);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        if ($res->num_rows > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

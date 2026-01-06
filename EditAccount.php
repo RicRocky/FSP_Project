@@ -9,7 +9,6 @@ if (!isset($_SESSION['user'])) {
     $path = $_SERVER['SCRIPT_NAME'];
     $queryString = $_SERVER['QUERY_STRING'];
     $url = "http://" . $domain . $path . "?" . $queryString;
-    // http://localhost/fullstack/Project/FSP_Project/EditAccount.php?id=2019001&role=-
 
     header("Location: login.php?url=" . $url);
     die();

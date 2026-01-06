@@ -7,6 +7,17 @@ require_once "backend/helper/Pagination.php";
 
 session_start();
 
+if ($_SESSION['isadmin'] == 1) {
+    header("Location: ManageAccount.php");
+}
+
+// Mengecek apakah user saat ini member dari grup 
+$group = new Group();
+$res = $group->CheckUser($_GET['idgrup'],$_SESSION["user"]);
+if (!$res) {
+    header("Location: Home.php");
+}
+
 $grup = new Group();
 $rowGrup = $grup->GetGroup((String) $_GET["idgrup"])->fetch_assoc();
 

@@ -1,6 +1,31 @@
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg: #1F1F1F;
+        --card: #444444;
+        --text-color: #EFEFEF;
+        --your-chat: rgb(0, 115, 0);
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    :root {
+        --bg: #ABE1FB;
+        --card: aliceblue;
+        --text-color: #111111;
+        --secondry-text-color: #333333;
+        --your-chat: green;
+    }
+}
+
+
 body {
     padding: 0px 5px;
-    background-color: #ABE1FB;
+    background-color: var(--bg);
+    color: var(--text-color);
+}
+
+a {
+    color: var(--text-color);
 }
 
 .text-center {
@@ -56,11 +81,11 @@ body {
     padding: 1rem;
 }
 
-.pl-1{
+.pl-1 {
     padding-left: 0.5rem;
 }
 
-.pr-1{
+.pr-1 {
     padding-right: 0.5rem;
 }
 
@@ -68,7 +93,7 @@ body {
     text-decoration: underline;
 }
 
-.btn{
+.btn {
     border-radius: 0.5rem;
     padding: 0.3rem 1rem 0.3rem 1rem;
     background-color: whitesmoke;
@@ -86,19 +111,33 @@ body {
 
 .card {
     padding: 1.5rem;
-    background-color: aliceblue;
+    background-color: var(--card);
     border-radius: 2rem;
+}
+
+.card-home {
+    padding: 2rem;
+    width: 10vw;
+    min-width: 150px;
+    border-radius: 7%;
+    background-color: var(--card);
+}
+
+.card-home img {
+    width: 94%;
+}
+
+.card-home p {
+    padding-bottom: 20px;
 }
 
 .card-kecil {
     min-width: 60vw;
-
     padding: 1.5rem;
-    background-color: aliceblue;
     border-radius: 2rem;
 }
 
-.tengah{
+.tengah {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -133,7 +172,13 @@ body {
     height: 50vh;
 }
 
-.container-isi-chat{
+.form-login {
+    padding: 10px 17px;
+    background-color: var(--card);
+    border-radius: 15px;
+}
+
+.container-isi-chat {
     margin-bottom: 1rem;
     min-height: 60vh;
 }
@@ -146,7 +191,7 @@ body {
     width: fit-content;
 }
 
-.other-chat p{
+.other-chat p {
     margin: 0px;
     color: white;
 }
@@ -154,28 +199,37 @@ body {
 .your-chat {
     padding: 1rem 2rem;
     border-radius: 1rem;
-    background-color: green;
+    background-color: var(--your-chat);
     max-width: 70%;
     width: fit-content;
 }
 
-.your-chat p{
+.your-chat p {
     margin: 0px;
     color: white;
 }
 
-.kanan{
+.kanan {
     display: flex;
     align-items: end;
     flex-direction: column;
 }
 
-.input-pesan{
+.input-pesan {
     max-width: 90%;
     width: 100%;
     margin-right: 1rem;
 }
 
-.text-right{
+.text-right {
     text-align: right;
+}
+
+.tableMember {
+    display: flex;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 1em;
 }
