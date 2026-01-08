@@ -30,6 +30,8 @@ $res = $Thread->GetThreadById($id);
 $resgrup = $Thread->GetGroupId($id);
 $idgrup = $resgrup["idgrup"];
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -41,6 +43,11 @@ $idgrup = $resgrup["idgrup"];
 </head>
 
 <body>
+    <?php if (isset($_GET["closed"])) { ?>
+        <script>
+            alert("Thread has been closed");
+        </script>
+    <?php } ?>
     <header>
         <nav>
             <a href="ManageThread.php?idgrup=<?php echo $idgrup ?>.php"><button
@@ -227,9 +234,12 @@ $idgrup = $resgrup["idgrup"];
             success: function (data) {
                 console.log(data);
                 alert(data["msg"]);
+                $("#pesan").val("");
             },
         });
     }
 </script>
+
+
 
 </html>
