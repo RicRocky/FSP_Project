@@ -67,12 +67,12 @@ while ($row = $resDosens->fetch_assoc()) {
     $hasilDosen .= "     <td>" . $isLecturer . "</td>";
     $hasilDosen .= "     <td>" . $isAdmin . "</td>";
     $hasilDosen .= '     <td><a href="EditAccount.php?id=' . $nrpOrNpk . '&role=' . $isLecturer . '" class="space">Edit</a>'
-        . '<a href="backend/DeleteAccountProcess.php?id=' . $nrpOrNpk .
-        '&role=' . $isLecturer .
-        '&username=' . $username .
-        '&ext=' . $row["foto_extension"] .
-        '" class="space delete-link">Delete</a>
-</td>';
+            . '<a href="backend/DeleteAccountProcess.php?id=' . $nrpOrNpk .
+            '&role=' . $isLecturer .
+            '&username=' . $username .
+            '&ext=' . $row["foto_extension"] .
+            '" class="space delete-link">Delete</a>
+        </td>';
     $hasilDosen .= "</tr>";
 }
 ?>

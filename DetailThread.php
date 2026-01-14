@@ -50,7 +50,7 @@ $idgrup = $resgrup["idgrup"];
     <?php } ?>
     <header>
         <nav>
-            <a href="ManageThread.php?idgrup=<?php echo $idgrup ?>.php"><button
+            <a href="ManageThread.php?idgrup=<?php echo $idgrup ?>"><button
                     class="btn-back mt-1">Kembali</button></a>
         </nav>
     </header>
@@ -76,7 +76,7 @@ $idgrup = $resgrup["idgrup"];
                 ?>
             </div>
         </section>
-        <section>
+        <section class="mb-20 mt-5">
             <?php if ($res["username_pembuat"] == $_SESSION["user"]) {
                 echo "<a href='backend/CloseThread.php?id=" . $_GET["id"] . "'>Close Thread</a>";
             } ?>
@@ -101,7 +101,6 @@ $idgrup = $resgrup["idgrup"];
         async: false,
         cache: false,
         success: function (data) {
-            console.log(data);
             if (data["status"] == "Error") {
                 alert(data["msg"]);
                 return;
@@ -123,7 +122,6 @@ $idgrup = $resgrup["idgrup"];
             async: false,
             cache: false,
             success: function (data) {
-                console.log(data);
                 if (data["status"] == "Error") {
                     alert(data["msg"]);
                     return;
@@ -219,7 +217,6 @@ $idgrup = $resgrup["idgrup"];
 
     function Kirim() {
         let pesanBaru = $("#pesan").val();
-        console.log(pesanBaru);
         $.ajax({
             url: "backend/ChatProcess.php",
             type: "post",
@@ -232,7 +229,6 @@ $idgrup = $resgrup["idgrup"];
             async: false,
             cache: false,
             success: function (data) {
-                console.log(data);
                 alert(data["msg"]);
                 $("#pesan").val("");
             },

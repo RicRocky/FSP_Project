@@ -153,7 +153,6 @@ $res = $group->GetGroupById((int) $_GET['id']);
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
     crossorigin="anonymous"></script>
 <script>
-    console.log(<?php echo $hasil; ?>)
     const nodeTbodyEvent = $("#tbodyEvent");
     const nodeTbodyDaftarMember = $("#tbodyDaftarMember");
     const nodeTbodyDaftarMemberDosen = $("#tbodyDaftarMemberDosen");
@@ -171,10 +170,6 @@ $res = $group->GetGroupById((int) $_GET['id']);
         cache: false,
         success: function (data) {
             TampilkanDataTableEvent(data["data"]);
-            console.log(data);
-        },
-        error: function (data) {
-            console.log(data);
         },
     });
 
@@ -190,10 +185,6 @@ $res = $group->GetGroupById((int) $_GET['id']);
         cache: false,
         success: function (data) {
             TampilkanDataTableDaftarMember(data["data"]);
-            console.log(data);
-        },
-        error: function (data) {
-            console.log(data);
         },
     });
 
@@ -280,11 +271,7 @@ $res = $group->GetGroupById((int) $_GET['id']);
             cache: false,
             success: function (data) {
                 TampilkanDataTableEvent(data["data"]);
-                console.log(data);
                 alert(data["msg"]);
-            },
-            error: function (data) {
-                console.log(data);
             },
         });
     }

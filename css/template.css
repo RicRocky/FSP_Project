@@ -17,6 +17,9 @@
     }
 }
 
+.text {
+    color: var(--text-color);
+}
 
 body {
     padding: 0px 5px;
@@ -70,6 +73,10 @@ a {
 
 .mb-2 {
     margin-bottom: 1rem !important;
+}
+
+.mb-20 {
+    margin-bottom: 10rem !important;
 }
 
 

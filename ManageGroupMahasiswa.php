@@ -80,7 +80,6 @@ if ($_SESSION['isadmin'] == 1) {
         cache: false,
         success: function (data) {
             TampilkanDataTableGrupMahasiswa(data["data"]);
-            console.log(data);
         },
     })
 
@@ -105,11 +104,7 @@ if ($_SESSION['isadmin'] == 1) {
             cache: false,
             success: function (data) {
                 TampilkanDataTableGrupPublic(data["data"]);
-                console.log(data);
             },
-            error: function (data) {
-                console.log(data);
-            }
         });
     }
 
@@ -129,10 +124,8 @@ if ($_SESSION['isadmin'] == 1) {
                 if (data["status"] == "Success") {
                     TampilkanDataTableGrupMahasiswa(data["data"]);
                     alert("Berhasil");
-                    console.log(data);
                 } else {
                     alert(data["msg"]);
-                    console.log(data);
                 }
             },
         })
@@ -213,10 +206,8 @@ if ($_SESSION['isadmin'] == 1) {
                 if (data["status"] == "Success") {
                     TampilkanDataTableGrupMahasiswa(data["data"]);
                     alert("Berhasil");
-                    console.log(data);
                 } else {
                     alert(data["msg"]);
-                    console.log(data);
                 }
             },
         });

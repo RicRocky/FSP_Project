@@ -200,13 +200,12 @@ while ($row = $resDosens->fetch_assoc()) {
         type: "post",
         data: {
             action: "LoadDataDaftarMahasiswaDosen",
-            idgrup: <?php echo $_GET["idgrup"] ?>,
+            idgrup: <?php echo $_GET["idgrup"]; ?>,
         },
         dataType: "json",
         async: false,
         cache: false,
         success: function (data) {
-            console.log(data);
             nodeTbodyMember.html("");
             if (data["data"].length == 0) {
                 nodeTbodyMember.append(`
@@ -227,13 +226,9 @@ while ($row = $resDosens->fetch_assoc()) {
                 });
             }
         },
-        error: function (data) {
-            console.log(data);
-        },
     });
 
     function HapusMember(id) {
-        console.log(id);
         $.ajax({
             url: "backend/ManageMemberGrupProcess.php",
             type: "post",
@@ -246,7 +241,6 @@ while ($row = $resDosens->fetch_assoc()) {
             async: false,
             cache: false,
             success: function (data) {
-                console.log(data);
                 nodeTbodyMember.html("");
                 if (data["data"].length == 0) {
                     nodeTbodyMember.append(`
@@ -267,9 +261,6 @@ while ($row = $resDosens->fetch_assoc()) {
                     });
                 }
                 alert(data["msg"]);
-            },
-            error: function (data) {
-                console.log(data);
             },
         });
     }
@@ -280,14 +271,13 @@ while ($row = $resDosens->fetch_assoc()) {
             type: "post",
             data: {
                 action: "TambahMember",
-                idgrup: <?php echo $_GET["idgrup"] ?>,
+                idgrup: <?php echo $_GET["idgrup"]; ?>,
                 username: username,
             },
             dataType: "json",
             async: false,
             cache: false,
             success: function (data) {
-                console.log(data);
                 nodeTbodyMember.html("");
                 if (data["data"].length == 0) {
                     nodeTbodyMember.append(`
@@ -309,9 +299,6 @@ while ($row = $resDosens->fetch_assoc()) {
                 }
                 alert(data["msg"]);
             },
-            error: function (data) {
-                console.log(data);
-            }
         });
     }
 </script>

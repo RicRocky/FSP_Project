@@ -22,11 +22,17 @@ if ($_SESSION['isadmin'] == 1) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ganti Password</title>
     <link rel="stylesheet" href="css/pageChangePassword.css">
+    <link rel="stylesheet" href="css/template.css">
 </head>
 
 <body>
+    <header>
+        <nav>
+            <a href="Home.php"><button class="btn-back mt-1">Kembali</button></a>
+        </nav>
+    </header>
     <main>
-        <h2>Ganti Password</h2>
+        <h1 class="text-center mt-3 underline">Ganti Password</h1>
         <section>
             <form action="backend/ChangePasswordProcess.php" method="POST">
                 <label>Password Lama:</label><br>
@@ -38,7 +44,7 @@ if ($_SESSION['isadmin'] == 1) {
                 <label>Konfirmasi Password Baru:</label><br>
                 <input type="password" name="konfirmasi" required><br><br>
 
-                <button type="submit">Ganti Password</button>
+                <button type="submit" class="btn">Ganti Password</button>
             </form>
             <?php
             if (isset($_GET['status'])) {
